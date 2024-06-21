@@ -1,0 +1,18 @@
+﻿<ui:FluentWindow x:Class="StokTakip.Views.Windows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StokTakip.Views.Windows" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        mc:Ignorable="d"
+        Title="Stok Takip" Height="450" Width="800" 
+        ExtendsContentIntoTitleBar="True"
+        WindowStartupLocation="CenterScreen" 
+        WindowBackdropType="Mica" 
+        WindowCornerPreference="Round" Closed="FluentWindow_Closed">
+    <Grid>
+        <ui:TitleBar Title="Stok Takip"/>
+        <Frame x:Name="mainFrame" Margin="5,50,5,5"/>
+        <ui:SnackbarPresenter x:Name="mainSnackbarPresenter"/>
+    </Grid>
+</ui:FluentWindow>

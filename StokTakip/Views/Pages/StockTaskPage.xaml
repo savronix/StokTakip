@@ -1,0 +1,77 @@
+﻿<Page x:Class="StokTakip.Views.Pages.StockTaskPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:StokTakip.Views.Pages" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="StockTaskPage">
+
+    <Grid >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="10">
+            <ui:TextBlock Text="Stok Bilgileri" Foreground="{DynamicResource AppForeground}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,0,0,0" FontWeight="Bold" FontSize="18"/>
+            <StackPanel VerticalAlignment="Top" Margin="10,10,10,10">
+                <ui:TextBox x:Name="txtStockNumber" PlaceholderText="Numarası" Margin="0,0,0,0" IsEnabled="False"/>
+                <ui:TextBox x:Name="txtStockCategory" PlaceholderText="Kategori" Margin="0,10,0,0" IsEnabled="False"/>
+                <ui:TextBox x:Name="txtStockName" PlaceholderText="Adı" Margin="0,10,0,0" IsEnabled="False"/>
+                <ComboBox x:Name="cmbbxStockUnit" Margin="0,10,0,0" SelectedIndex="0" IsEnabled="False">
+                    <ComboBoxItem>Adet</ComboBoxItem>
+                    <ComboBoxItem>KG</ComboBoxItem>
+                    <ComboBoxItem>LT</ComboBoxItem>
+                </ComboBox>
+                <ui:Button x:Name="btnSelect" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,15,0,0" Click="btnSelect_Click" MinWidth="100">
+                    <ui:Button.Content>
+                        <StackPanel>
+                            <ui:SymbolIcon Symbol="ArrowExportUp20"/>
+                            <ui:TextBlock Text="Seç" TextAlignment="Center" TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </ui:Button.Content>
+                </ui:Button>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="10">
+            <ui:TextBlock Text="İşlem Bilgileri" Foreground="{DynamicResource AppForeground}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,0,0,0" FontWeight="Bold" FontSize="18"/>
+            <StackPanel VerticalAlignment="Top" Margin="10,10,10,10">
+                <ui:TextBox x:Name="txtTaskNumber" PlaceholderText="İşlem Numarası" Margin="0,0,0,0" IsEnabled="False"/>
+                <ComboBox x:Name="cmbbxTask" Margin="0,10,0,0" SelectedIndex="0" SelectionChanged="cmbbxTask_SelectionChanged">
+                    <ComboBoxItem>İşlem Seçiniz</ComboBoxItem>
+                    <ComboBoxItem>Giriş</ComboBoxItem>
+                    <ComboBoxItem>Çıkış</ComboBoxItem>
+                </ComboBox>
+                <ui:TextBox x:Name="txtTime" PlaceholderText="Tarih" Margin="0,10,0,0" />
+                <ui:NumberBox x:Name="txtAmount" PlaceholderText="Miktar" Margin="0,10,0,0" />
+                <ui:TextBox x:Name="txtDescription" PlaceholderText="Açıklama" Height="80" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" Margin="0,10,0,0" />
+
+            </StackPanel>
+        </StackPanel>
+        <ui:Button x:Name="btnReset" Grid.Column="1" Click="btnReset_Click" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="110" Height="70" Margin="10,10,250,10">
+            <ui:Button.Content>
+                <StackPanel>
+                    <ui:SymbolIcon Symbol="ArrowClockwise20"/>
+                    <ui:TextBlock Text="Sıfırla" TextAlignment="Center" TextWrapping="Wrap"/>
+                </StackPanel>
+            </ui:Button.Content>
+        </ui:Button>
+        <ui:Button x:Name="btnSave" Grid.Column="1" Click="btnSave_Click" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="110" Height="70" Margin="10,10,130,10">
+            <ui:Button.Content>
+                <StackPanel>
+                    <ui:SymbolIcon Symbol="Save20"/>
+                    <ui:TextBlock Text="Kaydet" TextAlignment="Center" TextWrapping="Wrap"/>
+                </StackPanel>
+            </ui:Button.Content>
+        </ui:Button>
+        <ui:Button x:Name="btnBack" Grid.Column="1" Click="btnBack_Click" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="110" Height="70" Margin="10">
+            <ui:Button.Content>
+                <StackPanel>
+                    <ui:SymbolIcon Symbol="ArrowCircleLeft20"/>
+                    <ui:TextBlock Text="Geri Dön" TextAlignment="Center" TextWrapping="Wrap"/>
+                </StackPanel>
+            </ui:Button.Content>
+        </ui:Button>
+    </Grid>
+</Page>

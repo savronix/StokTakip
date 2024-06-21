@@ -1,0 +1,35 @@
+﻿<ui:FluentWindow x:Class="StokTakip.Views.Windows.StockSelectWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StokTakip.Views.Windows" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        mc:Ignorable="d"
+        Title="StockSelectWindow" Height="450" WindowStartupLocation="CenterScreen" Width="800" ExtendsContentIntoTitleBar="True">
+    <Grid>
+        <ui:TitleBar Title="Seçmek için sağ tıklayın"/>
+        <Grid Margin="10,50,10,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <ui:TextBox Name="txtSearch" PlaceholderText="Stok Ara" Grid.Row="0" TextChanged="txtSearch_TextChanged"/>
+            <DataGrid x:Name="dtgrdStockList" IsReadOnly="True" AutoGenerateColumns="False" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" Grid.Row="1" VerticalAlignment="Stretch" Margin="0,10,0,0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Stok Numarası" Binding="{Binding StockNumber}" Width="*" />
+                    <DataGridTextColumn Header="Stok Kategori" Binding="{Binding StockCategory}" Width="*" />
+                    <DataGridTextColumn Header="Stok Adı" Binding="{Binding StockName}" Width="*" />
+                    <DataGridTextColumn Header="Stok Birimi" Binding="{Binding StockUnit}" Width="*" />
+                    <DataGridTextColumn Header="Stok Kalan" Binding="{Binding StockLast}" Width="*" />
+                </DataGrid.Columns>
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <ui:MenuItem x:Name="dtgrdSec" Header="Seç" Click="dtgrdSec_Click"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+            </DataGrid>
+        </Grid>
+        <ui:SnackbarPresenter x:Name="mySnackbarPresenter"/>
+
+    </Grid>
+</ui:FluentWindow>
