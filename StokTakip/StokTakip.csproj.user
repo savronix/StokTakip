@@ -51,6 +51,9 @@
     <Page Update="Views\Pages\StockMovementsPage.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\Pages\StockTaskEditPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\Pages\StockTaskPage.xaml">
       <SubType>Designer</SubType>
     </Page>

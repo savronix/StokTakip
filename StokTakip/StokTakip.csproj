@@ -13,4 +13,10 @@
     <PackageReference Include="WPF-UI" Version="3.0.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Views\Pages\StockTaskEditPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
 </Project>

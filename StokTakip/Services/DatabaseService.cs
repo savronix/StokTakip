@@ -239,6 +239,122 @@ namespace StokTakip.Services
                 connection.Close();
             }
         }
+        public static int GetStockLast(string stockNumber)
+        {
+            int stockLast = 0;
+
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            {
+                connection.Open();
+
+                string sql = "SELECT StockLast FROM stocks WHERE StockNumber = @StockNumber";
+
+                using (SQLiteCommand command = new SQLiteCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@StockNumber", stockNumber);
+
+                    using (SQLiteDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            stockLast = Convert.ToInt32(reader["StockLast"]);
+                        }
+                    }
+                }
+
+                connection.Close();
+            }
+
+            return stockLast;
+        }
+
+        public static void TaskUpdate(string taskNo, string taskTime, string taskDescription, string amount,int StockLast)
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            {
+                connection.Open();
+
+                // Task bilgilerini çek
+                string selectSql = "SELECT Task, Amount, StockNumber FROM stockmovements WHERE TaskNo = @TaskNo";
+                string originalTask = string.Empty;
+                int originalAmount = 0;
+                string stockNumber = string.Empty;
+
+                using (SQLiteCommand selectCommand = new SQLiteCommand(selectSql, connection))
+                {
+                    selectCommand.Parameters.AddWithValue("@TaskNo", taskNo);
+
+                    using (SQLiteDataReader reader = selectCommand.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            originalTask = reader["Task"].ToString();
+                            originalAmount = Convert.ToInt32(reader["Amount"]);
+                            stockNumber = reader["StockNumber"].ToString();
+                        }
+                    }
+                }
+
+                if (string.IsNullOrEmpty(originalTask) || string.IsNullOrEmpty(stockNumber))
+                {
+                    MessageService.ShowSnackBar("Görev bulunamadı.", "Hata", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Warning20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
+                    return;
+                }
+
+                int newAmount = Convert.ToInt32(amount);
+                int amountDifference = newAmount - originalAmount;
+
+                // Stok güncellemesi için kontrol
+                if (originalTask == "Çıkış" && amountDifference > StockLast)
+                {
+                    MessageService.ShowSnackBar("Depoda bulunan miktardan fazla çıkış yapamazsınız.", "Dikkat", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Warning20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
+                    return;
+                }
+
+                // Task güncelle
+                string updateSql = "UPDATE stockmovements SET TaskTime = @TaskTime, TaskDescription = @TaskDescription, Amount = @Amount WHERE TaskNo = @TaskNo";
+
+                using (SQLiteCommand updateCommand = new SQLiteCommand(updateSql, connection))
+                {
+                    updateCommand.Parameters.AddWithValue("@TaskTime", taskTime);
+                    updateCommand.Parameters.AddWithValue("@TaskDescription", taskDescription);
+                    updateCommand.Parameters.AddWithValue("@Amount", newAmount);
+                    updateCommand.Parameters.AddWithValue("@TaskNo", taskNo);
+
+                    updateCommand.ExecuteNonQuery();
+                }
+
+                // Stok güncelle
+                if (originalTask == "Giriş")
+                {
+                    string stockUpdateSql = "UPDATE stocks SET StockLogin = StockLogin + @AmountDifference, StockLast = (StockLogin + @AmountDifference) - StockOut WHERE StockNumber = @StockNumber";
+                    using (SQLiteCommand stockUpdateCommand = new SQLiteCommand(stockUpdateSql, connection))
+                    {
+                        stockUpdateCommand.Parameters.AddWithValue("@AmountDifference", amountDifference);
+                        stockUpdateCommand.Parameters.AddWithValue("@StockNumber", stockNumber);
+
+                        stockUpdateCommand.ExecuteNonQuery();
+                    }
+                }
+                else if (originalTask == "Çıkış")
+                {
+                    string stockUpdateSql = "UPDATE stocks SET StockOut = StockOut + @AmountDifference, StockLast = StockLogin - (StockOut + @AmountDifference) WHERE StockNumber = @StockNumber";
+                    using (SQLiteCommand stockUpdateCommand = new SQLiteCommand(stockUpdateSql, connection))
+                    {
+                        stockUpdateCommand.Parameters.AddWithValue("@AmountDifference", amountDifference);
+                        stockUpdateCommand.Parameters.AddWithValue("@StockNumber", stockNumber);
+
+                        stockUpdateCommand.ExecuteNonQuery();
+                    }
+                }
+
+                MessageService.ShowSnackBar("İşlem başarıyla güncellendi.", "Başarılı", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Checkmark20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
+                FrameService.Navigate(typeof(StockMovementsPage));
+
+                connection.Close();
+            }
+        }
+
         public static void StockCardAdd(string StockNumber,string StockCategory,string StockName,string StockUnit)
         {
             using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
@@ -302,23 +418,40 @@ namespace StokTakip.Services
                 try
                 {
                     connection.Open();
-                    string query = "UPDATE stocks SET StockCategory = @StockCategory, StockName = @StockName, StockUnit = @StockUnit " +
-                                   "WHERE StockNumber = @StockNumber";
-                    using (SQLiteCommand command = new SQLiteCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@StockNumber", StockNumber);
-                        command.Parameters.AddWithValue("@StockCategory", StockCategory);
-                        command.Parameters.AddWithValue("@StockName", StockName);
-                        command.Parameters.AddWithValue("@StockUnit", StockUnit);
-                        int rowsAffected = command.ExecuteNonQuery();
 
-                        if (rowsAffected > 0)
+                    using (SQLiteTransaction transaction = connection.BeginTransaction())
+                    {
+                        string stockQuery = "UPDATE stocks SET StockCategory = @StockCategory, StockName = @StockName, StockUnit = @StockUnit " +
+                                            "WHERE StockNumber = @StockNumber";
+                        using (SQLiteCommand stockCommand = new SQLiteCommand(stockQuery, connection))
                         {
-                            MessageService.ShowSnackBar("Stok başarıyla güncellendi.", "Başarılı", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Checkmark20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
-                        }
-                        else
-                        {
-                            MessageService.ShowSnackBar("Stok numarası bulunamadı.", "Uyarı", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Warning20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
+                            stockCommand.Parameters.AddWithValue("@StockNumber", StockNumber);
+                            stockCommand.Parameters.AddWithValue("@StockCategory", StockCategory);
+                            stockCommand.Parameters.AddWithValue("@StockName", StockName);
+                            stockCommand.Parameters.AddWithValue("@StockUnit", StockUnit);
+                            int stockRowsAffected = stockCommand.ExecuteNonQuery();
+
+                            if (stockRowsAffected > 0)
+                            {
+                                string stockMovementsQuery = "UPDATE stockmovements SET StockCategory = @StockCategory, StockName = @StockName, StockUnit = @StockUnit " +
+                                                             "WHERE StockNumber = @StockNumber";
+                                using (SQLiteCommand stockMovementsCommand = new SQLiteCommand(stockMovementsQuery, connection))
+                                {
+                                    stockMovementsCommand.Parameters.AddWithValue("@StockNumber", StockNumber);
+                                    stockMovementsCommand.Parameters.AddWithValue("@StockCategory", StockCategory);
+                                    stockMovementsCommand.Parameters.AddWithValue("@StockName", StockName);
+                                    stockMovementsCommand.Parameters.AddWithValue("@StockUnit", StockUnit);
+                                    stockMovementsCommand.ExecuteNonQuery();
+                                }
+
+                                transaction.Commit();
+                                MessageService.ShowSnackBar("Stok başarıyla güncellendi.", "Başarılı", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Checkmark20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
+                            }
+                            else
+                            {
+                                transaction.Rollback();
+                                MessageService.ShowSnackBar("Stok numarası bulunamadı.", "Uyarı", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Warning20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
+                            }
                         }
 
                         FrameService.Navigate(typeof(StockCardTaskPage));
@@ -330,6 +463,7 @@ namespace StokTakip.Services
                 }
             }
         }
+
 
         public static string GetNextStockNumber()
         {

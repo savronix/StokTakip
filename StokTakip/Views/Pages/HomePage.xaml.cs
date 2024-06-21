@@ -1,6 +1,7 @@
 ﻿using StokTakip.Services;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,7 +38,7 @@ namespace StokTakip.Views.Pages
             FrameService.Navigate(typeof(SettingsPage));
         }
 
-       
+
 
         private void btnStockCardTask_Click(object sender, RoutedEventArgs e)
         {
@@ -52,6 +53,57 @@ namespace StokTakip.Views.Pages
         private void btnStockMovements_Click(object sender, RoutedEventArgs e)
         {
             FrameService.Navigate(typeof(StockMovementsPage));
+        }
+
+        private void btnApply_Click(object sender, RoutedEventArgs e)
+        {
+            if (dtgrdStockList.ItemsSource is DataView dataView)
+            {
+                if (rdbtnCategory.IsChecked == true)
+                {
+                    string searchText = txtStockCategory.Text.Trim();
+
+                    // Apply the filter to the DataView
+                    if (!string.IsNullOrEmpty(searchText))
+                    {
+                        // Example filter logic: filter by StockName containing the searchText
+                        dataView.RowFilter = $"StockCategory LIKE '%{searchText}%'";
+                    }
+                    else
+                    {
+                        // Clear the filter if the search box is empty
+                        dataView.RowFilter = string.Empty;
+                    }
+                }
+                else if (rdbtnName.IsChecked == true)
+                {
+                    string searchText = txtStockName.Text.Trim();
+
+                    // Apply the filter to the DataView
+                    if (!string.IsNullOrEmpty(searchText))
+                    {
+                        // Example filter logic: filter by StockName containing the searchText
+                        dataView.RowFilter = $"StockName LIKE '%{searchText}%'";
+                    }
+                    else
+                    {
+                        // Clear the filter if the search box is empty
+                        dataView.RowFilter = string.Empty;
+                    }
+                }
+            }
+        }
+
+        private void btnReset_Click(object sender, RoutedEventArgs e)
+        {
+            if (dtgrdStockList.ItemsSource is DataView dataView)
+            {
+                dataView.RowFilter = string.Empty;
+            }
+            txtStockName.Clear();
+            txtStockCategory.Clear();
+            rdbtnName.IsChecked = false;
+            rdbtnCategory.IsChecked = false;
         }
     }
 }

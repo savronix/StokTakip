@@ -9,7 +9,7 @@
       Title="HomePage">
     <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="70"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <WrapPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -56,9 +56,9 @@
         </WrapPanel>
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
+                <RowDefinition Height="30"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="100"/>
+                <RowDefinition Height="140"/>
             </Grid.RowDefinitions>
             <ui:TextBlock Text="Stok Listesi ve Durumu" Grid.Row="0" Foreground="{DynamicResource AppForeground}" FontWeight="Bold" FontSize="17"/>
             <DataGrid x:Name="dtgrdStockList" IsReadOnly="True" AutoGenerateColumns="False" Grid.Row="1">
@@ -72,18 +72,37 @@
                     <DataGridTextColumn Header="Kalan" Binding="{Binding StockLast}" Width="*" />
                 </DataGrid.Columns>
             </DataGrid>
-            <ui:TextBlock Text="Filtrele ve Ara" Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0" Foreground="{DynamicResource AppForeground}"/>
-            <WrapPanel Grid.Row="2" VerticalAlignment="Top" Margin="0,35,0,0" HorizontalAlignment="Center">
-                <ui:TextBox x:Name="txtStockNumber" PlaceholderText="Numarası" MinHeight="35" MinWidth="120" />
-                <ui:TextBox x:Name="txtStockName" PlaceholderText="Adı" MinHeight="35" MinWidth="120" Margin="10,0,0,0"/>
-                <ui:Button x:Name="btnApply" Margin="10,0,0,0" MinWidth="120" MinHeight="35">
-                    <ui:Button.Content>
-                        <WrapPanel>
-                            <ui:SymbolIcon Symbol="Checkmark20"/>
-                            <ui:TextBlock Text="Uygula" TextAlignment="Center" TextWrapping="Wrap" Margin="10,0,0,0" VerticalAlignment="Center"/>
-                        </WrapPanel>
-                    </ui:Button.Content>
-                </ui:Button>
+            <ui:TextBlock Text="Filtrele ve Ara" Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,10,0,0" Foreground="{DynamicResource AppForeground}"/>
+            <WrapPanel Grid.Row="2" VerticalAlignment="Top" Margin="10,35,10,10" HorizontalAlignment="Left">
+                <StackPanel>
+                    <WrapPanel>
+                        <ui:TextBox x:Name="txtStockCategory" PlaceholderText="Kategori" MinHeight="35" MinWidth="120" />
+                        <ui:TextBox x:Name="txtStockName" PlaceholderText="Adı" MinHeight="35" MinWidth="120" Margin="10,0,0,0"/>
+                    </WrapPanel>
+                    <WrapPanel Margin="0,10,0,0">
+                        <RadioButton Name="rdbtnCategory" Content="Kategori" Margin="10,0,0,0"/>
+                        <RadioButton Name="rdbtnName" Content="Ad" Margin="10,0,0,0"/>
+                    </WrapPanel>
+                </StackPanel>
+                <StackPanel>
+                    <ui:Button x:Name="btnApply" Click="btnApply_Click" Margin="0,0,0,0" MinWidth="120" MinHeight="35">
+                        <ui:Button.Content>
+                            <WrapPanel>
+                                <ui:SymbolIcon Symbol="Checkmark20"/>
+                                <ui:TextBlock Text="Uygula" TextAlignment="Center" TextWrapping="Wrap" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                            </WrapPanel>
+                        </ui:Button.Content>
+                    </ui:Button>
+                    <ui:Button x:Name="btnReset" Click="btnReset_Click" Margin="0,10,0,0" MinWidth="120" MinHeight="35">
+                        <ui:Button.Content>
+                            <WrapPanel>
+                                <ui:SymbolIcon Symbol="ArrowClockwise20"/>
+                                <ui:TextBlock Text="Sıfırla" TextAlignment="Center" TextWrapping="Wrap" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                            </WrapPanel>
+                        </ui:Button.Content>
+                    </ui:Button>
+                </StackPanel>
+
             </WrapPanel>
         </Grid>
     </Grid>

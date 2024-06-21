@@ -54,29 +54,13 @@ namespace StokTakip.Services
                     gotoPage = (Page)Activator.CreateInstance(pageType);
                     PageCache.AddPage(pageType, gotoPage);
                 }
-                if (pageType == typeof(HomePage))
+                
+                if (pageType != typeof(LoginPage))
                 {
+
                     mainWindow.Width = 1200;
-                    mainWindow.MinWidth = 750;
-                    mainWindow.Height = 600;
-                }
-                else if (pageType==typeof(StockCardAddPage))
-                {
-                    mainWindow.Width = 600;
-                    mainWindow.Height = 400;
-                }
-                else if (pageType==typeof(StockTaskPage))
-                {
-                    mainWindow.Width = 800;
-                    mainWindow.Height = 450;
-                }
-                else 
-                {
-                    if (pageType != typeof(LoginPage))
-                    {
-                        mainWindow.Width = 1000;
-                        mainWindow.Height = 600;
-                    }
+                    mainWindow.Height = 650;
+
                 }
                 var scaleTransform = new ScaleTransform(0.4, 0.4);
                 gotoPage.RenderTransform = scaleTransform;

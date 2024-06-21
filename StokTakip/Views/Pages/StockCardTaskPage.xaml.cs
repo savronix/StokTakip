@@ -76,10 +76,6 @@ namespace StokTakip.Views.Pages
                     FrameService.Navigate(typeof(StockCardEditPage));
                 }
             }
-            else
-            {
-
-            }
         }
 
         private async void dtgrdSil_Click(object sender, RoutedEventArgs e)
