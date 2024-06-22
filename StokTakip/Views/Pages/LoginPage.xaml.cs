@@ -27,6 +27,18 @@ namespace StokTakip.Views.Pages
             InitializeComponent();
             PasswordBox.Focus();
             txtblckNameSurname.Text = DatabaseService.GetNameSurname();
+            string imageSource = DatabaseService.GetImageSource();
+
+            // Check if the imageSource is "personImage" and use dynamic resource if true
+            if (imageSource == "personImage")
+            {
+                imgPerson.Source = (ImageSource)FindResource("personImage");
+            }
+            else
+            {
+                // Update the image source from the URI
+                imgPerson.Source = new BitmapImage(new Uri(imageSource, UriKind.Absolute));
+            }
         }
 
         private void PasswordBox_KeyDown(object sender, KeyEventArgs e)
@@ -65,6 +77,19 @@ namespace StokTakip.Views.Pages
             catch (Exception ex)
             {
                 new MessageService(ex.Message, "Bir şeyler ters gitti!", false);
+            }
+        }
+
+        private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(DatabaseService.GetMail()))
+            {
+                FrameService.Navigate(typeof(FactoryPasswordPage));
+            }
+            else
+            {
+                MessageService.ShowSnackBar("Mail Tanımlama işlemi yapmamışsınız. Şifre sıfırlanamaz", "!", new SymbolIcon(SymbolRegular.Dismiss20), ControlAppearance.Dark, 3);
+
             }
         }
     }

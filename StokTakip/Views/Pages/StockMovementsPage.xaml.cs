@@ -92,9 +92,45 @@ namespace StokTakip.Views.Pages
             }
         }
 
-        private void dtgrdSil_Click(object sender, RoutedEventArgs e)
+        private async void dtgrdSil_Click(object sender, RoutedEventArgs e)
         {
+            int selectedRowIndex = dtgrdStockMovementsList.SelectedIndex;
 
+            if (selectedRowIndex >= 0)
+            {
+                var itemsSource = dtgrdStockMovementsList.ItemsSource as IList;
+                if (itemsSource != null && selectedRowIndex < itemsSource.Count)
+                {
+                    var selectedItem = itemsSource[selectedRowIndex] as DataRowView;
+
+                    if (selectedItem != null)
+                    {
+                        string _TaskNo = selectedItem["TaskNo"].ToString();
+                        string _Task = selectedItem["Task"].ToString();
+                        string _TaskTime = selectedItem["TaskTime"].ToString();
+                        string _Amount = selectedItem["Amount"].ToString();
+                        string _StockName = selectedItem["StockName"].ToString();
+                        string _StockNumber = selectedItem["StockNumber"].ToString();
+                        string _StockUnit = selectedItem["StockUnit"].ToString();
+                        Wpf.Ui.Controls.MessageBox messageBox = new Wpf.Ui.Controls.MessageBox();
+                        messageBox.Title = "Dikkat!";
+                        messageBox.Content = $"{_TaskTime} tarihindeki {_StockName} malzemesine ait {_Amount} {_StockUnit} {_Task} işlemi silinecektir. Onaylıyor musunuz?";
+                        messageBox.IsSecondaryButtonEnabled = false;
+                        messageBox.PrimaryButtonText = "Evet";
+                        messageBox.CloseButtonText = "Hayır";
+                        var result = await messageBox.ShowDialogAsync();
+                        if (result == Wpf.Ui.Controls.MessageBoxResult.Primary)
+                        {
+                            DatabaseService.TaskDelete(_TaskNo,_Task, _StockNumber,_Amount);
+                            DatabaseService.FillStockMovementsList(dtgrdStockMovementsList);
+                        }
+                        else
+                        {
+                            MessageService.ShowSnackBar("Silme işlemi iptal edildi.", "Uyarı", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Warning20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
+                        }
+                    }
+                }
+            }
         }
     }
 }

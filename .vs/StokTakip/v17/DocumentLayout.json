@@ -1,0 +1,199 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\SavroniX\\Documents\\GitHub\\StokTakip\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{D11E1D76-9316-4361-83A0-0B22901A6D5C}|StokTakip\\StokTakip.csproj|c:\\users\\savronix\\documents\\github\\stoktakip\\stoktakip\\views\\pages\\settingspage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D11E1D76-9316-4361-83A0-0B22901A6D5C}|StokTakip\\StokTakip.csproj|solutionrelative:stoktakip\\views\\pages\\settingspage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D11E1D76-9316-4361-83A0-0B22901A6D5C}|StokTakip\\StokTakip.csproj|c:\\users\\savronix\\documents\\github\\stoktakip\\stoktakip\\views\\pages\\loginpage.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{D11E1D76-9316-4361-83A0-0B22901A6D5C}|StokTakip\\StokTakip.csproj|solutionrelative:stoktakip\\views\\pages\\loginpage.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D11E1D76-9316-4361-83A0-0B22901A6D5C}|StokTakip\\StokTakip.csproj|c:\\users\\savronix\\documents\\github\\stoktakip\\stoktakip\\views\\pages\\factorypasswordpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D11E1D76-9316-4361-83A0-0B22901A6D5C}|StokTakip\\StokTakip.csproj|solutionrelative:stoktakip\\views\\pages\\factorypasswordpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D11E1D76-9316-4361-83A0-0B22901A6D5C}|StokTakip\\StokTakip.csproj|c:\\users\\savronix\\documents\\github\\stoktakip\\stoktakip\\services\\databaseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D11E1D76-9316-4361-83A0-0B22901A6D5C}|StokTakip\\StokTakip.csproj|solutionrelative:stoktakip\\services\\databaseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D11E1D76-9316-4361-83A0-0B22901A6D5C}|StokTakip\\StokTakip.csproj|c:\\users\\savronix\\documents\\github\\stoktakip\\stoktakip\\views\\pages\\factorypasswordpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{D11E1D76-9316-4361-83A0-0B22901A6D5C}|StokTakip\\StokTakip.csproj|solutionrelative:stoktakip\\views\\pages\\factorypasswordpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D11E1D76-9316-4361-83A0-0B22901A6D5C}|StokTakip\\StokTakip.csproj|c:\\users\\savronix\\documents\\github\\stoktakip\\stoktakip\\views\\pages\\loginpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{D11E1D76-9316-4361-83A0-0B22901A6D5C}|StokTakip\\StokTakip.csproj|solutionrelative:stoktakip\\views\\pages\\loginpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D11E1D76-9316-4361-83A0-0B22901A6D5C}|StokTakip\\StokTakip.csproj|c:\\users\\savronix\\documents\\github\\stoktakip\\stoktakip\\views\\pages\\settingspage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{D11E1D76-9316-4361-83A0-0B22901A6D5C}|StokTakip\\StokTakip.csproj|solutionrelative:stoktakip\\views\\pages\\settingspage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D11E1D76-9316-4361-83A0-0B22901A6D5C}|StokTakip\\StokTakip.csproj|c:\\users\\savronix\\documents\\github\\stoktakip\\stoktakip\\views\\pages\\stockmovementspage.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{D11E1D76-9316-4361-83A0-0B22901A6D5C}|StokTakip\\StokTakip.csproj|solutionrelative:stoktakip\\views\\pages\\stockmovementspage.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D11E1D76-9316-4361-83A0-0B22901A6D5C}|StokTakip\\StokTakip.csproj|c:\\users\\savronix\\documents\\github\\stoktakip\\stoktakip\\views\\pages\\stockmovementspage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{D11E1D76-9316-4361-83A0-0B22901A6D5C}|StokTakip\\StokTakip.csproj|solutionrelative:stoktakip\\views\\pages\\stockmovementspage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D11E1D76-9316-4361-83A0-0B22901A6D5C}|StokTakip\\StokTakip.csproj|c:\\users\\savronix\\documents\\github\\stoktakip\\stoktakip\\views\\pages\\stockcardtaskpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D11E1D76-9316-4361-83A0-0B22901A6D5C}|StokTakip\\StokTakip.csproj|solutionrelative:stoktakip\\views\\pages\\stockcardtaskpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D11E1D76-9316-4361-83A0-0B22901A6D5C}|StokTakip\\StokTakip.csproj|c:\\users\\savronix\\documents\\github\\stoktakip\\stoktakip\\views\\pages\\homepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{D11E1D76-9316-4361-83A0-0B22901A6D5C}|StokTakip\\StokTakip.csproj|solutionrelative:stoktakip\\views\\pages\\homepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 8,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DatabaseService.cs",
+              "DocumentMoniker": "C:\\Users\\SavroniX\\Documents\\GitHub\\StokTakip\\StokTakip\\Services\\DatabaseService.cs",
+              "RelativeDocumentMoniker": "StokTakip\\Services\\DatabaseService.cs",
+              "ToolTip": "C:\\Users\\SavroniX\\Documents\\GitHub\\StokTakip\\StokTakip\\Services\\DatabaseService.cs",
+              "RelativeToolTip": "StokTakip\\Services\\DatabaseService.cs",
+              "ViewState": "AQIAADoCAAAAAAAAAAArwFUCAAAZAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-22T22:34:45.233Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "LoginPage.xaml",
+              "DocumentMoniker": "C:\\Users\\SavroniX\\Documents\\GitHub\\StokTakip\\StokTakip\\Views\\Pages\\LoginPage.xaml",
+              "RelativeDocumentMoniker": "StokTakip\\Views\\Pages\\LoginPage.xaml",
+              "ToolTip": "C:\\Users\\SavroniX\\Documents\\GitHub\\StokTakip\\StokTakip\\Views\\Pages\\LoginPage.xaml",
+              "RelativeToolTip": "StokTakip\\Views\\Pages\\LoginPage.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-22T22:23:18.694Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "FactoryPasswordPage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\SavroniX\\Documents\\GitHub\\StokTakip\\StokTakip\\Views\\Pages\\FactoryPasswordPage.xaml.cs",
+              "RelativeDocumentMoniker": "StokTakip\\Views\\Pages\\FactoryPasswordPage.xaml.cs",
+              "ToolTip": "C:\\Users\\SavroniX\\Documents\\GitHub\\StokTakip\\StokTakip\\Views\\Pages\\FactoryPasswordPage.xaml.cs",
+              "RelativeToolTip": "StokTakip\\Views\\Pages\\FactoryPasswordPage.xaml.cs",
+              "ViewState": "AQIAAEgAAAAAAAAAAAAowHYAAACYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-22T22:03:08.086Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "FactoryPasswordPage.xaml",
+              "DocumentMoniker": "C:\\Users\\SavroniX\\Documents\\GitHub\\StokTakip\\StokTakip\\Views\\Pages\\FactoryPasswordPage.xaml",
+              "RelativeDocumentMoniker": "StokTakip\\Views\\Pages\\FactoryPasswordPage.xaml",
+              "ToolTip": "C:\\Users\\SavroniX\\Documents\\GitHub\\StokTakip\\StokTakip\\Views\\Pages\\FactoryPasswordPage.xaml",
+              "RelativeToolTip": "StokTakip\\Views\\Pages\\FactoryPasswordPage.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-22T22:01:35.731Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "StockCardTaskPage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\SavroniX\\Documents\\GitHub\\StokTakip\\StokTakip\\Views\\Pages\\StockCardTaskPage.xaml.cs",
+              "RelativeDocumentMoniker": "StokTakip\\Views\\Pages\\StockCardTaskPage.xaml.cs",
+              "ToolTip": "C:\\Users\\SavroniX\\Documents\\GitHub\\StokTakip\\StokTakip\\Views\\Pages\\StockCardTaskPage.xaml.cs",
+              "RelativeToolTip": "StokTakip\\Views\\Pages\\StockCardTaskPage.xaml.cs",
+              "ViewState": "AQIAAE4AAAAAAAAAAAAcwHMAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-22T21:41:29.954Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "StockMovementsPage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\SavroniX\\Documents\\GitHub\\StokTakip\\StokTakip\\Views\\Pages\\StockMovementsPage.xaml.cs",
+              "RelativeDocumentMoniker": "StokTakip\\Views\\Pages\\StockMovementsPage.xaml.cs",
+              "ToolTip": "C:\\Users\\SavroniX\\Documents\\GitHub\\StokTakip\\StokTakip\\Views\\Pages\\StockMovementsPage.xaml.cs",
+              "RelativeToolTip": "StokTakip\\Views\\Pages\\StockMovementsPage.xaml.cs",
+              "ViewState": "AQIAAGsAAAAAAAAAAAAgwHwAAABCAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-22T21:41:22.813Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "StockMovementsPage.xaml",
+              "DocumentMoniker": "C:\\Users\\SavroniX\\Documents\\GitHub\\StokTakip\\StokTakip\\Views\\Pages\\StockMovementsPage.xaml",
+              "RelativeDocumentMoniker": "StokTakip\\Views\\Pages\\StockMovementsPage.xaml",
+              "ToolTip": "C:\\Users\\SavroniX\\Documents\\GitHub\\StokTakip\\StokTakip\\Views\\Pages\\StockMovementsPage.xaml",
+              "RelativeToolTip": "StokTakip\\Views\\Pages\\StockMovementsPage.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-22T21:41:18.092Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "LoginPage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\SavroniX\\Documents\\GitHub\\StokTakip\\StokTakip\\Views\\Pages\\LoginPage.xaml.cs",
+              "RelativeDocumentMoniker": "StokTakip\\Views\\Pages\\LoginPage.xaml.cs",
+              "ToolTip": "C:\\Users\\SavroniX\\Documents\\GitHub\\StokTakip\\StokTakip\\Views\\Pages\\LoginPage.xaml.cs",
+              "RelativeToolTip": "StokTakip\\Views\\Pages\\LoginPage.xaml.cs",
+              "ViewState": "AQIAAD4AAAAAAAAAAAAUwFUAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-22T21:25:13.877Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SettingsPage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\SavroniX\\Documents\\GitHub\\StokTakip\\StokTakip\\Views\\Pages\\SettingsPage.xaml.cs",
+              "RelativeDocumentMoniker": "StokTakip\\Views\\Pages\\SettingsPage.xaml.cs",
+              "ToolTip": "C:\\Users\\SavroniX\\Documents\\GitHub\\StokTakip\\StokTakip\\Views\\Pages\\SettingsPage.xaml.cs",
+              "RelativeToolTip": "StokTakip\\Views\\Pages\\SettingsPage.xaml.cs",
+              "ViewState": "AQIAAFYAAAAAAAAAAAAIwG0AAACkAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-22T20:58:15.494Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "SettingsPage.xaml",
+              "DocumentMoniker": "C:\\Users\\SavroniX\\Documents\\GitHub\\StokTakip\\StokTakip\\Views\\Pages\\SettingsPage.xaml",
+              "RelativeDocumentMoniker": "StokTakip\\Views\\Pages\\SettingsPage.xaml",
+              "ToolTip": "C:\\Users\\SavroniX\\Documents\\GitHub\\StokTakip\\StokTakip\\Views\\Pages\\SettingsPage.xaml",
+              "RelativeToolTip": "StokTakip\\Views\\Pages\\SettingsPage.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-22T20:50:42.939Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "HomePage.xaml",
+              "DocumentMoniker": "C:\\Users\\SavroniX\\Documents\\GitHub\\StokTakip\\StokTakip\\Views\\Pages\\HomePage.xaml",
+              "RelativeDocumentMoniker": "StokTakip\\Views\\Pages\\HomePage.xaml",
+              "ToolTip": "C:\\Users\\SavroniX\\Documents\\GitHub\\StokTakip\\StokTakip\\Views\\Pages\\HomePage.xaml",
+              "RelativeToolTip": "StokTakip\\Views\\Pages\\HomePage.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-22T20:49:12.263Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -9,10 +9,10 @@
       Title="HomePage">
     <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="70"/>
+            <RowDefinition Height="90"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <WrapPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <WrapPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10">
             <ui:Button x:Name="btnStockCardTask" Click="btnStockCardTask_Click" Width="110" Height="70" Margin="0,0,10,0">
                 <ui:Button.Content>
                     <StackPanel>
@@ -34,14 +34,6 @@
                     <StackPanel>
                         <ui:SymbolIcon Symbol="Timeline20"/>
                         <ui:TextBlock Text="Stok Hareketler" TextAlignment="Center" TextWrapping="Wrap"/>
-                    </StackPanel>
-                </ui:Button.Content>
-            </ui:Button>
-            <ui:Button x:Name="btnPdfwithout" Width="110" Height="70" Margin="0,0,10,0">
-                <ui:Button.Content>
-                    <StackPanel>
-                        <ui:SymbolIcon Symbol="ArrowExportUp20"/>
-                        <ui:TextBlock Text="PDF Olarak Aktar" TextAlignment="Center" TextWrapping="Wrap"/>
                     </StackPanel>
                 </ui:Button.Content>
             </ui:Button>

@@ -44,6 +44,84 @@ namespace StokTakip.Services
             }
             return nameSurname;
         }
+        private static string GetPassword()
+        {
+            string password = string.Empty;
+            using (SQLiteConnection conn = new SQLiteConnection(ConnectionString))
+            {
+                conn.Open();
+
+                // SQL sorgusunu tanımlayın
+                string query = "SELECT password FROM userinfo";
+
+                // SQL komutunu oluşturun
+                using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+                {
+                    // Veritabanından veriyi okuyun
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Sonuçları işleyin
+                        while (reader.Read())
+                        {
+                            password = reader["password"].ToString();
+                        }
+                    }
+                }
+            }
+            return password;
+        }
+        public static string GetMail()
+        {
+            string mail = string.Empty;
+            using (SQLiteConnection conn = new SQLiteConnection(ConnectionString))
+            {
+                conn.Open();
+
+                // SQL sorgusunu tanımlayın
+                string query = "SELECT mail FROM userinfo";
+
+                // SQL komutunu oluşturun
+                using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+                {
+                    // Veritabanından veriyi okuyun
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Sonuçları işleyin
+                        while (reader.Read())
+                        {
+                            mail = reader["mail"].ToString();
+                        }
+                    }
+                }
+            }
+            return mail;
+        }
+        public static string GetImageSource()
+        {
+            string imageSource = string.Empty;
+            using (SQLiteConnection conn = new SQLiteConnection(ConnectionString))
+            {
+                conn.Open();
+
+                // SQL sorgusunu tanımlayın
+                string query = "SELECT imageSource FROM userinfo";
+
+                // SQL komutunu oluşturun
+                using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+                {
+                    // Veritabanından veriyi okuyun
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Sonuçları işleyin
+                        while (reader.Read())
+                        {
+                            imageSource = reader["imageSource"].ToString();
+                        }
+                    }
+                }
+            }
+            return imageSource;
+        }
         public static bool ValidateUser(string password)
         {
             bool isValid = false;
@@ -75,7 +153,7 @@ namespace StokTakip.Services
                 }
                 catch (Exception ex)
                 {
-                    new MessageService("Veritabanı hatası: " + ex.Message, "Bir hata meydana geldi!",false);
+                    new MessageService("Veritabanı hatası: " + ex.Message, "Bir hata meydana geldi!", false);
                 }
             }
 
@@ -207,7 +285,7 @@ namespace StokTakip.Services
 
                     command.ExecuteNonQuery();
                 }
-                if (task=="Giriş")
+                if (task == "Giriş")
                 {
                     string updateSql = "UPDATE stocks SET StockLogin = StockLogin + @Amount, StockLast = (StockLogin + @Amount) - StockOut WHERE StockNumber = @StockNumber";
 
@@ -231,12 +309,64 @@ namespace StokTakip.Services
                         updateCommand.ExecuteNonQuery();
                     }
                 }
-                
+
 
                 MessageService.ShowSnackBar("İşlem başarıyla kaydedildi.", "Başarılı", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Checkmark20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
                 FrameService.Navigate(typeof(HomePage));
 
                 connection.Close();
+            }
+        }
+        public static void TaskDelete(string taskNo,string task, string stockNumber,string amount)
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    string query = "DELETE FROM stockmovements WHERE TaskNo = @TaskNo";
+                    using (SQLiteCommand command = new SQLiteCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@TaskNo", taskNo);
+                        int rowsAffected = command.ExecuteNonQuery();
+                        if (rowsAffected > 0)
+                        {
+                            if (task == "Giriş")
+                            {
+                                string updateSql = "UPDATE stocks SET StockLogin = StockLogin - @Amount, StockLast = (StockLogin - @Amount) - StockOut WHERE StockNumber = @StockNumber";
+
+                                using (SQLiteCommand updateCommand = new SQLiteCommand(updateSql, connection))
+                                {
+                                    updateCommand.Parameters.AddWithValue("@Amount", Convert.ToInt32(amount)); // Amount INTEGER olduğu için Int32 olarak ekledik
+                                    updateCommand.Parameters.AddWithValue("@StockNumber", stockNumber);
+
+                                    updateCommand.ExecuteNonQuery();
+                                }
+                            }
+                            else if (task == "Çıkış")
+                            {
+                                string updateSql = "UPDATE stocks SET StockOut = StockOut - @Amount, StockLast = StockLogin - (StockOut - @Amount) WHERE StockNumber = @StockNumber";
+
+                                using (SQLiteCommand updateCommand = new SQLiteCommand(updateSql, connection))
+                                {
+                                    updateCommand.Parameters.AddWithValue("@Amount", Convert.ToInt32(amount)); // Amount INTEGER olduğu için Int32 olarak ekledik
+                                    updateCommand.Parameters.AddWithValue("@StockNumber", stockNumber);
+
+                                    updateCommand.ExecuteNonQuery();
+                                }
+                            }
+                            MessageService.ShowSnackBar("İşlem başarıyla silindi.", "Başarılı", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Checkmark20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
+                        }
+                        else
+                        {
+                            MessageService.ShowSnackBar("Silinecek işlem bulunamadı.", "Uyarı", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Warning20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageService.ShowSnackBar("Bir hata oluştu: " + ex.Message, "Hata", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.ErrorCircle20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
+                }
             }
         }
         public static int GetStockLast(string stockNumber)
@@ -268,7 +398,7 @@ namespace StokTakip.Services
             return stockLast;
         }
 
-        public static void TaskUpdate(string taskNo, string taskTime, string taskDescription, string amount,int StockLast)
+        public static void TaskUpdate(string taskNo, string taskTime, string taskDescription, string amount, int StockLast)
         {
             using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
             {
@@ -355,7 +485,7 @@ namespace StokTakip.Services
             }
         }
 
-        public static void StockCardAdd(string StockNumber,string StockCategory,string StockName,string StockUnit)
+        public static void StockCardAdd(string StockNumber, string StockCategory, string StockName, string StockUnit)
         {
             using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
             {
@@ -371,7 +501,7 @@ namespace StokTakip.Services
                         command.Parameters.AddWithValue("@StockName", StockName);
                         command.Parameters.AddWithValue("@StockUnit", StockUnit);
                         command.ExecuteNonQuery();
-                        MessageService.ShowSnackBar("Stok başarıyla kaydedildi.", "Başarılı",new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Checkmark20),Wpf.Ui.Controls.ControlAppearance.Dark,1);
+                        MessageService.ShowSnackBar("Stok başarıyla kaydedildi.", "Başarılı", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Checkmark20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
                         FrameService.Navigate(typeof(StockCardTaskPage));
                     }
                     connection.Close();
@@ -410,7 +540,173 @@ namespace StokTakip.Services
                 }
             }
         }
+        public static void PasswordUpdate(string oldPassword, string newPassword)
+        {
 
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    string passwordQuery = "UPDATE userinfo SET password = @NewPassword WHERE password = @OldPassword";
+                    using (SQLiteCommand passwordCommand = new SQLiteCommand(passwordQuery, connection))
+                    {
+                        passwordCommand.Parameters.AddWithValue("@NewPassword", newPassword);
+                        passwordCommand.Parameters.AddWithValue("@OldPassword", oldPassword);
+
+                        int rowsAffected = passwordCommand.ExecuteNonQuery();
+
+                        if (rowsAffected == 0)
+                        {
+                            MessageService.ShowSnackBar("Şifre güncellenemedi. Eski şifre yanlış olabilir", "Güncelleme Başarısız", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.ArrowClockwise20), Wpf.Ui.Controls.ControlAppearance.Dark, 2);
+                        }
+                        else
+                        {
+                            MessageService.ShowSnackBar("Şifre başarıyla güncellendi", "Güncelleme Başarılı", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.ArrowClockwise20), Wpf.Ui.Controls.ControlAppearance.Dark, 2);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageService.ShowSnackBar("Bir hata oluştu: " + ex.Message, "Hata", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Checkmark20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
+                }
+            }
+
+        }
+        public static void PasswordUpdate(string newPassword)
+        {
+
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    string password = GetPassword();
+                    string passwordQuery = "UPDATE userinfo SET password = @NewPassword WHERE password = @OldPassword";
+                    using (SQLiteCommand passwordCommand = new SQLiteCommand(passwordQuery, connection))
+                    {
+                        passwordCommand.Parameters.AddWithValue("@NewPassword", newPassword);
+                        passwordCommand.Parameters.AddWithValue("@OldPassword", password);
+                        int rowsAffected = passwordCommand.ExecuteNonQuery();
+
+                        if (rowsAffected == 0)
+                        {
+                            MessageService.ShowSnackBar("Şifre ayarlanamadı.", "İşlem Başarısız", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.DismissCircle20), Wpf.Ui.Controls.ControlAppearance.Dark, 2);
+                        }
+                        else
+                        {
+                            MessageService.ShowSnackBar("Şifre başarıyla ayarlandı", "İşlem Başarılı", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Checkmark20), Wpf.Ui.Controls.ControlAppearance.Dark, 2);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageService.ShowSnackBar("Bir hata oluştu: " + ex.Message, "Hata", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Checkmark20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
+                }
+            }
+
+        }
+        public static void MailSetandUpdate(string mail, string password)
+        {
+
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    string mailQuery = "UPDATE userinfo SET mail = @Mail WHERE password = @Password";
+                    using (SQLiteCommand mailCommand = new SQLiteCommand(mailQuery, connection))
+                    {
+                        mailCommand.Parameters.AddWithValue("@Mail", mail);
+                        mailCommand.Parameters.AddWithValue("@Password", password);
+
+                        int rowsAffected = mailCommand.ExecuteNonQuery();
+
+                        if (rowsAffected == 0)
+                        {
+                            MessageService.ShowSnackBar("Mail ayarlanamadı. Şifre yanlış olabilir", "İşlem Başarısız", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.ArrowClockwise20), Wpf.Ui.Controls.ControlAppearance.Dark, 2);
+                        }
+                        else
+                        {
+                            MessageService.ShowSnackBar("Mail ayarlandı", "İşlem Başarılı", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.ArrowClockwise20), Wpf.Ui.Controls.ControlAppearance.Dark, 2);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageService.ShowSnackBar("Bir hata oluştu: " + ex.Message, "Hata", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Checkmark20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
+                }
+            }
+
+        }
+        public static void NameSurnameUpdate(string nameSurname,string password)
+        {
+
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    string nameSurnameQuery = "UPDATE userinfo SET nameSurname = @NameSurname WHERE password = @Password";
+                    using (SQLiteCommand nameSurnameCommand = new SQLiteCommand(nameSurnameQuery, connection))
+                    {
+                        nameSurnameCommand.Parameters.AddWithValue("@Password", password);
+                        nameSurnameCommand.Parameters.AddWithValue("@NameSurname", nameSurname);
+
+                        int rowsAffected = nameSurnameCommand.ExecuteNonQuery();
+
+                        if (rowsAffected == 0)
+                        {
+                            MessageService.ShowSnackBar("İsim Soyisim güncellenemedi. Şifre yanlış olabilir", "Güncelleme Başarısız", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.ArrowClockwise20), Wpf.Ui.Controls.ControlAppearance.Dark, 2);
+                        }
+                        else
+                        {
+                            MessageService.ShowSnackBar("İsim Soyisim başarıyla güncellendi", "Güncelleme Başarılı", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.ArrowClockwise20), Wpf.Ui.Controls.ControlAppearance.Dark, 2);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageService.ShowSnackBar("Bir hata oluştu: " + ex.Message, "Hata", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Checkmark20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
+                }
+            }
+
+        }
+        public static void ProfilePictureUpdate(string password,string imagePath)
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    string nameSurnameQuery = "UPDATE userinfo SET imageSource = @ImagePath WHERE password = @Password";
+                    using (SQLiteCommand nameSurnameCommand = new SQLiteCommand(nameSurnameQuery, connection))
+                    {
+                        nameSurnameCommand.Parameters.AddWithValue("@Password", password);
+                        nameSurnameCommand.Parameters.AddWithValue("@ImagePath", imagePath);
+
+                        int rowsAffected = nameSurnameCommand.ExecuteNonQuery();
+
+                        if (rowsAffected == 0)
+                        {
+                            MessageService.ShowSnackBar("Profil Resmi güncellenemedi. Şifre yanlış olabilir", "Güncelleme Başarısız", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.ArrowClockwise20), Wpf.Ui.Controls.ControlAppearance.Dark, 2);
+                        }
+                        else
+                        {
+                            MessageService.ShowSnackBar("Profil Resmi başarıyla güncellendi", "Güncelleme Başarılı", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.ArrowClockwise20), Wpf.Ui.Controls.ControlAppearance.Dark, 2);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageService.ShowSnackBar("Bir hata oluştu: " + ex.Message, "Hata", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Checkmark20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
+                }
+            }
+        }
         public static void StockCardUpdate(string StockNumber, string StockCategory, string StockName, string StockUnit)
         {
             using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))

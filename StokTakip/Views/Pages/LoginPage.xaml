@@ -31,7 +31,7 @@
         <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20">
             <ui:TextBlock Text="Şifrenizi girin" Foreground="{DynamicResource AppForeground}" FontSize="28" FontWeight="Bold" Margin="0,0,0,0"/>
             <ui:PasswordBox x:Name="PasswordBox" PlaceholderText="Şifre" Height="35" Margin="0,20,0,0" KeyDown="PasswordBox_KeyDown"/>
-            <ui:HyperlinkButton Content="Şifrenizi mi unuttunuz?" FontSize="14"  Foreground="{DynamicResource AppForeground}" Margin="0,10,0,0"/>
+            <ui:HyperlinkButton Content="Şifrenizi mi unuttunuz?" Click="HyperlinkButton_Click" FontSize="14"  Foreground="{DynamicResource AppForeground}" Margin="0,10,0,0"/>
             <ui:Button Name="btnGirisYap" Content="Giriş Yap" Click="btnGirisYap_Click"  Margin="0,20,0,0"/>
            
         </StackPanel>

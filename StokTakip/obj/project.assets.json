@@ -1270,11 +1270,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\SavroniX\\Desktop\\repos\\StokTakip\\StokTakip\\StokTakip.csproj",
+      "projectUniqueName": "C:\\Users\\SavroniX\\Documents\\GitHub\\StokTakip\\StokTakip\\StokTakip.csproj",
       "projectName": "StokTakip",
-      "projectPath": "C:\\Users\\SavroniX\\Desktop\\repos\\StokTakip\\StokTakip\\StokTakip.csproj",
+      "projectPath": "C:\\Users\\SavroniX\\Documents\\GitHub\\StokTakip\\StokTakip\\StokTakip.csproj",
       "packagesPath": "C:\\Users\\SavroniX\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\SavroniX\\Desktop\\repos\\StokTakip\\StokTakip\\obj\\",
+      "outputPath": "C:\\Users\\SavroniX\\Documents\\GitHub\\StokTakip\\StokTakip\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\SavroniX\\AppData\\Roaming\\NuGet\\NuGet.Config",

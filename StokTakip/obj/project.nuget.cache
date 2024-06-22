@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "z6zDG+Mo1Ao=",
+  "dgSpecHash": "KfktgTQ/AF8=",
   "success": true,
-  "projectFilePath": "C:\\Users\\SavroniX\\Desktop\\repos\\StokTakip\\StokTakip\\StokTakip.csproj",
+  "projectFilePath": "C:\\Users\\SavroniX\\Documents\\GitHub\\StokTakip\\StokTakip\\StokTakip.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\SavroniX\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\SavroniX\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
