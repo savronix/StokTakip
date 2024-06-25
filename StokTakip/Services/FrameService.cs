@@ -55,12 +55,18 @@ namespace StokTakip.Services
                     PageCache.AddPage(pageType, gotoPage);
                 }
                 
-                if (pageType != typeof(LoginPage))
+                if (pageType != typeof(LoginPage)&& pageType != typeof(FactoryPasswordPage))
                 {
 
                     mainWindow.Width = 1200;
                     mainWindow.Height = 650;
-
+                }
+                else
+                {
+                    mainWindow.MinWidth = 600;
+                    mainWindow.MinHeight = 400;
+                    mainWindow.Width = 600;
+                    mainWindow.Height = 400;
                 }
                 var scaleTransform = new ScaleTransform(0.4, 0.4);
                 gotoPage.RenderTransform = scaleTransform;

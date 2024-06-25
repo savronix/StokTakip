@@ -6,6 +6,7 @@ using StokTakip.Views.Pages;
 using Wpf.Ui.Controls;
 using System.Data;
 using System.Security.Cryptography.X509Certificates;
+using DataGrid = System.Windows.Controls.DataGrid;
 
 namespace StokTakip.Services
 {
@@ -17,126 +18,137 @@ namespace StokTakip.Services
         static string databasePath = Path.Combine(applicationDirectory, "database.db");
 
         private static string ConnectionString = $@"Data Source={databasePath};Version=3;";
+
         public DatabaseService() { }
+
         public static string GetNameSurname()
         {
-            string nameSurname = string.Empty;
-            using (SQLiteConnection conn = new SQLiteConnection(ConnectionString))
+            try
             {
-                conn.Open();
-
-                // SQL sorgusunu tanımlayın
-                string query = "SELECT nameSurname FROM userinfo";
-
-                // SQL komutunu oluşturun
-                using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+                string nameSurname = string.Empty;
+                using (SQLiteConnection conn = new SQLiteConnection(ConnectionString))
                 {
-                    // Veritabanından veriyi okuyun
-                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    conn.Open();
+                    string query = "SELECT nameSurname FROM userinfo";
+                    using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
                     {
-                        // Sonuçları işleyin
-                        while (reader.Read())
+                        using (SQLiteDataReader reader = cmd.ExecuteReader())
                         {
-                            nameSurname = reader["nameSurname"].ToString();
+                            while (reader.Read())
+                            {
+                                nameSurname = reader["nameSurname"].ToString();
+                            }
                         }
                     }
                 }
+                return nameSurname;
             }
-            return nameSurname;
+            catch (Exception ex)
+            {
+                MessageService.ShowErrorSnackbar("Veritabanı hatası: " + ex.Message);
+                return string.Empty;
+            }
         }
+
         private static string GetPassword()
         {
-            string password = string.Empty;
-            using (SQLiteConnection conn = new SQLiteConnection(ConnectionString))
+            try
             {
-                conn.Open();
-
-                // SQL sorgusunu tanımlayın
-                string query = "SELECT password FROM userinfo";
-
-                // SQL komutunu oluşturun
-                using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+                string password = string.Empty;
+                using (SQLiteConnection conn = new SQLiteConnection(ConnectionString))
                 {
-                    // Veritabanından veriyi okuyun
-                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    conn.Open();
+                    string query = "SELECT password FROM userinfo";
+                    using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
                     {
-                        // Sonuçları işleyin
-                        while (reader.Read())
+                        using (SQLiteDataReader reader = cmd.ExecuteReader())
                         {
-                            password = reader["password"].ToString();
+                            while (reader.Read())
+                            {
+                                password = reader["password"].ToString();
+                            }
                         }
                     }
                 }
+                return password;
             }
-            return password;
+            catch (Exception ex)
+            {
+                MessageService.ShowErrorSnackbar("Veritabanı hatası: " + ex.Message);
+                return string.Empty;
+            }
         }
+
         public static string GetMail()
         {
-            string mail = string.Empty;
-            using (SQLiteConnection conn = new SQLiteConnection(ConnectionString))
+            try
             {
-                conn.Open();
-
-                // SQL sorgusunu tanımlayın
-                string query = "SELECT mail FROM userinfo";
-
-                // SQL komutunu oluşturun
-                using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+                string mail = string.Empty;
+                using (SQLiteConnection conn = new SQLiteConnection(ConnectionString))
                 {
-                    // Veritabanından veriyi okuyun
-                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    conn.Open();
+                    string query = "SELECT mail FROM userinfo";
+                    using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
                     {
-                        // Sonuçları işleyin
-                        while (reader.Read())
+                        using (SQLiteDataReader reader = cmd.ExecuteReader())
                         {
-                            mail = reader["mail"].ToString();
+                            while (reader.Read())
+                            {
+                                mail = reader["mail"].ToString();
+                            }
                         }
                     }
                 }
+                return mail;
             }
-            return mail;
+            catch (Exception ex)
+            {
+                MessageService.ShowErrorSnackbar("Veritabanı hatası: " + ex.Message);
+                return string.Empty;
+            }
         }
+
         public static string GetImageSource()
         {
-            string imageSource = string.Empty;
-            using (SQLiteConnection conn = new SQLiteConnection(ConnectionString))
+            try
             {
-                conn.Open();
-
-                // SQL sorgusunu tanımlayın
-                string query = "SELECT imageSource FROM userinfo";
-
-                // SQL komutunu oluşturun
-                using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+                string imageSource = string.Empty;
+                using (SQLiteConnection conn = new SQLiteConnection(ConnectionString))
                 {
-                    // Veritabanından veriyi okuyun
-                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    conn.Open();
+                    string query = "SELECT imageSource FROM userinfo";
+                    using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
                     {
-                        // Sonuçları işleyin
-                        while (reader.Read())
+                        using (SQLiteDataReader reader = cmd.ExecuteReader())
                         {
-                            imageSource = reader["imageSource"].ToString();
+                            while (reader.Read())
+                            {
+                                imageSource = reader["imageSource"].ToString();
+                            }
                         }
                     }
                 }
+                return imageSource;
             }
-            return imageSource;
+            catch (Exception ex)
+            {
+                MessageService.ShowErrorSnackbar("Veritabanı hatası: " + ex.Message);
+                return string.Empty;
+            }
         }
+
         public static bool ValidateUser(string password)
         {
-            bool isValid = false;
-
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            try
             {
-                connection.Open(); // Veritabanı bağlantısını aç
-
-                string query = "SELECT nameSurname FROM userinfo WHERE password = @password";
-
-                SQLiteCommand command = new SQLiteCommand(query, connection);
-                command.Parameters.AddWithValue("@password", password);
-
-                try
+                bool isValid = false;
+                using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
                 {
+                    connection.Open();
+                    string query = "SELECT nameSurname FROM userinfo WHERE password = @password";
+                    SQLiteCommand command = new SQLiteCommand(query, connection);
+                    command.Parameters.AddWithValue("@password", password);
+
                     using (SQLiteDataReader reader = command.ExecuteReader())
                     {
                         if (reader.Read())
@@ -151,248 +163,218 @@ namespace StokTakip.Services
                     }
                     connection.Close();
                 }
-                catch (Exception ex)
-                {
-                    new MessageService("Veritabanı hatası: " + ex.Message, "Bir hata meydana geldi!", false);
-                }
+                return isValid;
             }
-
-            return isValid;
-        }
-        public static void FillStockList(System.Windows.Controls.DataGrid dataGrid)
-        {
-            dataGrid.ItemsSource = null;
-
-            // Veritabanı bağlantısını oluştur
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            catch (Exception ex)
             {
-                try
-                {
-                    // Bağlantıyı aç
-                    connection.Open();
+                MessageService.ShowErrorSnackbar("Veritabanı hatası: " + ex.Message);
+                return false;
+            }
+        }
 
-                    // SQL sorgusunu tanımla
+        public static void FillStockList(DataGrid dataGrid)
+        {
+            try
+            {
+                dataGrid.ItemsSource = null;
+                using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+                {
+                    connection.Open();
                     string query = "SELECT StockNumber, StockCategory, StockName, StockUnit, StockLogin, StockOut, StockLast FROM stocks";
-
-                    // SQLite veri adaptörünü oluştur ve sorguyu çalıştır
                     using (SQLiteDataAdapter adapter = new SQLiteDataAdapter(query, connection))
                     {
-                        // Veri seti oluştur ve adaptörü kullanarak verileri doldur
                         DataSet dataSet = new DataSet();
                         adapter.Fill(dataSet, "stocks");
-
-                        // DataGrid'in veri kaynağını ayarla ve sıralama işlemini yap
                         DataView dataView = dataSet.Tables["stocks"].DefaultView;
                         dataView.Sort = "StockNumber ASC";
                         dataGrid.ItemsSource = dataView;
                     }
                 }
-                catch (Exception ex)
-                {
-                    MessageService.ShowSnackBar("Bir hata oluştu: " + ex.Message, "Hata", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Checkmark20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
-                }
+            }
+            catch (Exception ex)
+            {
+                MessageService.ShowErrorSnackbar("Veritabanı hatası: " + ex.Message);
             }
         }
 
-        public static void FillStockCardList(System.Windows.Controls.DataGrid dataGrid)
+        public static void FillStockCardList(DataGrid dataGrid)
         {
-            dataGrid.ItemsSource = null;
-
-            // Veritabanı bağlantısını oluştur
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            try
             {
-                try
+                dataGrid.ItemsSource = null;
+                using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
                 {
-                    // Bağlantıyı aç
                     connection.Open();
-
-                    // SQL sorgusunu tanımla
                     string query = "SELECT StockNumber, StockCategory, StockName, StockUnit FROM stocks";
-
-                    // SQLite veri adaptörünü oluştur ve sorguyu çalıştır
                     using (SQLiteDataAdapter adapter = new SQLiteDataAdapter(query, connection))
                     {
-                        // Veri seti oluştur ve adaptörü kullanarak verileri doldur
                         DataSet dataSet = new DataSet();
                         adapter.Fill(dataSet, "stocks");
-
-                        // DataGrid'in veri kaynağını ayarla ve sıralama işlemini yap
                         DataView dataView = dataSet.Tables["stocks"].DefaultView;
                         dataView.Sort = "StockNumber ASC";
                         dataGrid.ItemsSource = dataView;
                     }
                 }
-                catch (Exception ex)
-                {
-                    MessageService.ShowSnackBar("Bir hata oluştu: " + ex.Message, "Hata", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Checkmark20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
-                }
+            }
+            catch (Exception ex)
+            {
+                MessageService.ShowErrorSnackbar("Veritabanı hatası: " + ex.Message);
             }
         }
-        public static void FillStockMovementsList(System.Windows.Controls.DataGrid dataGrid)
+
+        public static void FillStockMovementsList(DataGrid dataGrid)
         {
-            dataGrid.ItemsSource = null;
-
-            // Veritabanı bağlantısını oluştur
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            try
             {
-                try
+                dataGrid.ItemsSource = null;
+                using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
                 {
-                    // Bağlantıyı aç
                     connection.Open();
-
-                    // SQL sorgusunu tanımla
                     string query = "SELECT * FROM stockmovements";
-
-                    // SQLite veri adaptörünü oluştur ve sorguyu çalıştır
                     using (SQLiteDataAdapter adapter = new SQLiteDataAdapter(query, connection))
                     {
-                        // Veri seti oluştur ve adaptörü kullanarak verileri doldur
                         DataSet dataSet = new DataSet();
                         adapter.Fill(dataSet, "stockmovements");
-
-                        // DataGrid'in veri kaynağını ayarla ve sıralama işlemini yap
                         DataView dataView = dataSet.Tables["stockmovements"].DefaultView;
                         dataView.Sort = "TaskNo ASC";
                         dataGrid.ItemsSource = dataView;
                     }
                 }
-                catch (Exception ex)
-                {
-                    MessageService.ShowSnackBar("Bir hata oluştu: " + ex.Message, "Hata", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Checkmark20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
-                }
+            }
+            catch (Exception ex)
+            {
+                MessageService.ShowErrorSnackbar("Veritabanı hatası: " + ex.Message);
             }
         }
+        ///asdasdsda
         public static void TaskAdd(string taskNo, string task, string taskTime, string amount, string taskDescription, string stockNumber, string stockCategory, string stockName, string stockUnit)
         {
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            try
             {
-                connection.Open();
-
-                string sql = "INSERT INTO stockmovements (TaskNo, Task, TaskTime, Amount, TaskDescription, StockNumber, StockCategory, StockName, StockUnit) " +
-                             "VALUES (@TaskNo, @Task, @TaskTime, @Amount, @TaskDescription, @StockNumber, @StockCategory, @StockName, @StockUnit)";
-
-                using (SQLiteCommand command = new SQLiteCommand(sql, connection))
-                {
-                    command.Parameters.AddWithValue("@TaskNo", taskNo);
-                    command.Parameters.AddWithValue("@Task", task);
-                    command.Parameters.AddWithValue("@TaskTime", taskTime);
-                    command.Parameters.AddWithValue("@Amount", Convert.ToInt32(amount));
-                    command.Parameters.AddWithValue("@TaskDescription", taskDescription);
-                    command.Parameters.AddWithValue("@StockNumber", stockNumber);
-                    command.Parameters.AddWithValue("@StockCategory", stockCategory);
-                    command.Parameters.AddWithValue("@StockName", stockName);
-                    command.Parameters.AddWithValue("@StockUnit", stockUnit);
-
-                    command.ExecuteNonQuery();
-                }
-                if (task == "Giriş")
-                {
-                    string updateSql = "UPDATE stocks SET StockLogin = StockLogin + @Amount, StockLast = (StockLogin + @Amount) - StockOut WHERE StockNumber = @StockNumber";
-
-                    using (SQLiteCommand updateCommand = new SQLiteCommand(updateSql, connection))
-                    {
-                        updateCommand.Parameters.AddWithValue("@Amount", Convert.ToInt32(amount)); // Amount INTEGER olduğu için Int32 olarak ekledik
-                        updateCommand.Parameters.AddWithValue("@StockNumber", stockNumber);
-
-                        updateCommand.ExecuteNonQuery();
-                    }
-                }
-                else if (task == "Çıkış")
-                {
-                    string updateSql = "UPDATE stocks SET StockOut = StockOut + @Amount, StockLast = StockLogin - (StockOut + @Amount) WHERE StockNumber = @StockNumber";
-
-                    using (SQLiteCommand updateCommand = new SQLiteCommand(updateSql, connection))
-                    {
-                        updateCommand.Parameters.AddWithValue("@Amount", Convert.ToInt32(amount)); // Amount INTEGER olduğu için Int32 olarak ekledik
-                        updateCommand.Parameters.AddWithValue("@StockNumber", stockNumber);
-
-                        updateCommand.ExecuteNonQuery();
-                    }
-                }
-
-
-                MessageService.ShowSnackBar("İşlem başarıyla kaydedildi.", "Başarılı", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Checkmark20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
-                FrameService.Navigate(typeof(HomePage));
-
-                connection.Close();
-            }
-        }
-        public static void TaskDelete(string taskNo,string task, string stockNumber,string amount)
-        {
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
-            {
-                try
+                using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
                 {
                     connection.Open();
+
+                    string sql = "INSERT INTO stockmovements (TaskNo, Task, TaskTime, Amount, TaskDescription, StockNumber, StockCategory, StockName, StockUnit) " +
+                                 "VALUES (@TaskNo, @Task, @TaskTime, @Amount, @TaskDescription, @StockNumber, @StockCategory, @StockName, @StockUnit)";
+
+                    using (SQLiteCommand command = new SQLiteCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("@TaskNo", taskNo);
+                        command.Parameters.AddWithValue("@Task", task);
+                        command.Parameters.AddWithValue("@TaskTime", taskTime);
+                        command.Parameters.AddWithValue("@Amount", Convert.ToInt32(amount)); // Consider handling conversion errors
+                        command.Parameters.AddWithValue("@TaskDescription", taskDescription);
+                        command.Parameters.AddWithValue("@StockNumber", stockNumber);
+                        command.Parameters.AddWithValue("@StockCategory", stockCategory);
+                        command.Parameters.AddWithValue("@StockName", stockName);
+                        command.Parameters.AddWithValue("@StockUnit", stockUnit);
+
+                        command.ExecuteNonQuery();
+                    }
+
+                    // Update stocks based on task type
+                    if (task == "Giriş" || task == "Çıkış")
+                    {
+                        string updateSql = task == "Giriş"
+                            ? "UPDATE stocks SET StockLogin = StockLogin + @Amount, StockLast = (StockLogin + @Amount) - StockOut WHERE StockNumber = @StockNumber"
+                            : "UPDATE stocks SET StockOut = StockOut + @Amount, StockLast = StockLogin - (StockOut + @Amount) WHERE StockNumber = @StockNumber";
+
+                        using (SQLiteCommand updateCommand = new SQLiteCommand(updateSql, connection))
+                        {
+                            updateCommand.Parameters.AddWithValue("@Amount", Convert.ToInt32(amount)); // Handle conversion errors
+                            updateCommand.Parameters.AddWithValue("@StockNumber", stockNumber);
+
+                            updateCommand.ExecuteNonQuery();
+                        }
+                    }
+
+                    MessageService.ShowSuccessSnackbar("İşlem başarıyla kaydedildi.");
+                    FrameService.Navigate(typeof(HomePage));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageService.ShowErrorSnackbar("Veritabanı hatası: " + ex.Message);
+            }
+        }
+
+        public static void TaskDelete(string taskNo, string task, string stockNumber, string amount)
+        {
+            try
+            {
+                using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+                {
+                    connection.Open();
+
                     string query = "DELETE FROM stockmovements WHERE TaskNo = @TaskNo";
                     using (SQLiteCommand command = new SQLiteCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@TaskNo", taskNo);
                         int rowsAffected = command.ExecuteNonQuery();
+
                         if (rowsAffected > 0)
                         {
-                            if (task == "Giriş")
+                            // Update stocks based on task type
+                            if (task == "Giriş" || task == "Çıkış")
                             {
-                                string updateSql = "UPDATE stocks SET StockLogin = StockLogin - @Amount, StockLast = (StockLogin - @Amount) - StockOut WHERE StockNumber = @StockNumber";
+                                string updateSql = task == "Giriş"
+                                    ? "UPDATE stocks SET StockLogin = StockLogin - @Amount, StockLast = (StockLogin - @Amount) - StockOut WHERE StockNumber = @StockNumber"
+                                    : "UPDATE stocks SET StockOut = StockOut - @Amount, StockLast = StockLogin - (StockOut - @Amount) WHERE StockNumber = @StockNumber";
 
                                 using (SQLiteCommand updateCommand = new SQLiteCommand(updateSql, connection))
                                 {
-                                    updateCommand.Parameters.AddWithValue("@Amount", Convert.ToInt32(amount)); // Amount INTEGER olduğu için Int32 olarak ekledik
+                                    updateCommand.Parameters.AddWithValue("@Amount", Convert.ToInt32(amount)); // Handle conversion errors
                                     updateCommand.Parameters.AddWithValue("@StockNumber", stockNumber);
 
                                     updateCommand.ExecuteNonQuery();
                                 }
                             }
-                            else if (task == "Çıkış")
-                            {
-                                string updateSql = "UPDATE stocks SET StockOut = StockOut - @Amount, StockLast = StockLogin - (StockOut - @Amount) WHERE StockNumber = @StockNumber";
 
-                                using (SQLiteCommand updateCommand = new SQLiteCommand(updateSql, connection))
-                                {
-                                    updateCommand.Parameters.AddWithValue("@Amount", Convert.ToInt32(amount)); // Amount INTEGER olduğu için Int32 olarak ekledik
-                                    updateCommand.Parameters.AddWithValue("@StockNumber", stockNumber);
-
-                                    updateCommand.ExecuteNonQuery();
-                                }
-                            }
-                            MessageService.ShowSnackBar("İşlem başarıyla silindi.", "Başarılı", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Checkmark20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
+                            MessageService.ShowSuccessSnackbar("İşlem başarıyla silindi.");
                         }
                         else
                         {
-                            MessageService.ShowSnackBar("Silinecek işlem bulunamadı.", "Uyarı", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Warning20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
+                            MessageService.ShowWarningSnackbar("Silinecek işlem bulunamadı.");
                         }
                     }
                 }
-                catch (Exception ex)
-                {
-                    MessageService.ShowSnackBar("Bir hata oluştu: " + ex.Message, "Hata", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.ErrorCircle20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
-                }
+            }
+            catch (Exception ex)
+            {
+                MessageService.ShowErrorSnackbar("Veritabanı hatası: " + ex.Message);
             }
         }
+
         public static int GetStockLast(string stockNumber)
         {
             int stockLast = 0;
 
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            try
             {
-                connection.Open();
-
-                string sql = "SELECT StockLast FROM stocks WHERE StockNumber = @StockNumber";
-
-                using (SQLiteCommand command = new SQLiteCommand(sql, connection))
+                using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
                 {
-                    command.Parameters.AddWithValue("@StockNumber", stockNumber);
+                    connection.Open();
 
-                    using (SQLiteDataReader reader = command.ExecuteReader())
+                    string sql = "SELECT StockLast FROM stocks WHERE StockNumber = @StockNumber";
+
+                    using (SQLiteCommand command = new SQLiteCommand(sql, connection))
                     {
-                        if (reader.Read())
+                        command.Parameters.AddWithValue("@StockNumber", stockNumber);
+
+                        using (SQLiteDataReader reader = command.ExecuteReader())
                         {
-                            stockLast = Convert.ToInt32(reader["StockLast"]);
+                            if (reader.Read())
+                            {
+                                stockLast = Convert.ToInt32(reader["StockLast"]);
+                            }
                         }
                     }
                 }
-
-                connection.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageService.ShowErrorSnackbar("Veritabanı hatası: " + ex.Message);
             }
 
             return stockLast;
@@ -400,91 +382,89 @@ namespace StokTakip.Services
 
         public static void TaskUpdate(string taskNo, string taskTime, string taskDescription, string amount, int StockLast)
         {
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            try
             {
-                connection.Open();
-
-                // Task bilgilerini çek
-                string selectSql = "SELECT Task, Amount, StockNumber FROM stockmovements WHERE TaskNo = @TaskNo";
-                string originalTask = string.Empty;
-                int originalAmount = 0;
-                string stockNumber = string.Empty;
-
-                using (SQLiteCommand selectCommand = new SQLiteCommand(selectSql, connection))
+                using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
                 {
-                    selectCommand.Parameters.AddWithValue("@TaskNo", taskNo);
+                    connection.Open();
 
-                    using (SQLiteDataReader reader = selectCommand.ExecuteReader())
+                    // Task bilgilerini çek
+                    string selectSql = "SELECT Task, Amount, StockNumber FROM stockmovements WHERE TaskNo = @TaskNo";
+                    string originalTask = string.Empty;
+                    int originalAmount = 0;
+                    string stockNumber = string.Empty;
+
+                    using (SQLiteCommand selectCommand = new SQLiteCommand(selectSql, connection))
                     {
-                        if (reader.Read())
+                        selectCommand.Parameters.AddWithValue("@TaskNo", taskNo);
+
+                        using (SQLiteDataReader reader = selectCommand.ExecuteReader())
                         {
-                            originalTask = reader["Task"].ToString();
-                            originalAmount = Convert.ToInt32(reader["Amount"]);
-                            stockNumber = reader["StockNumber"].ToString();
+                            if (reader.Read())
+                            {
+                                originalTask = reader["Task"].ToString();
+                                originalAmount = Convert.ToInt32(reader["Amount"]);
+                                stockNumber = reader["StockNumber"].ToString();
+                            }
                         }
                     }
-                }
 
-                if (string.IsNullOrEmpty(originalTask) || string.IsNullOrEmpty(stockNumber))
-                {
-                    MessageService.ShowSnackBar("Görev bulunamadı.", "Hata", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Warning20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
-                    return;
-                }
-
-                int newAmount = Convert.ToInt32(amount);
-                int amountDifference = newAmount - originalAmount;
-
-                // Stok güncellemesi için kontrol
-                if (originalTask == "Çıkış" && amountDifference > StockLast)
-                {
-                    MessageService.ShowSnackBar("Depoda bulunan miktardan fazla çıkış yapamazsınız.", "Dikkat", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Warning20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
-                    return;
-                }
-
-                // Task güncelle
-                string updateSql = "UPDATE stockmovements SET TaskTime = @TaskTime, TaskDescription = @TaskDescription, Amount = @Amount WHERE TaskNo = @TaskNo";
-
-                using (SQLiteCommand updateCommand = new SQLiteCommand(updateSql, connection))
-                {
-                    updateCommand.Parameters.AddWithValue("@TaskTime", taskTime);
-                    updateCommand.Parameters.AddWithValue("@TaskDescription", taskDescription);
-                    updateCommand.Parameters.AddWithValue("@Amount", newAmount);
-                    updateCommand.Parameters.AddWithValue("@TaskNo", taskNo);
-
-                    updateCommand.ExecuteNonQuery();
-                }
-
-                // Stok güncelle
-                if (originalTask == "Giriş")
-                {
-                    string stockUpdateSql = "UPDATE stocks SET StockLogin = StockLogin + @AmountDifference, StockLast = (StockLogin + @AmountDifference) - StockOut WHERE StockNumber = @StockNumber";
-                    using (SQLiteCommand stockUpdateCommand = new SQLiteCommand(stockUpdateSql, connection))
+                    if (string.IsNullOrEmpty(originalTask) || string.IsNullOrEmpty(stockNumber))
                     {
-                        stockUpdateCommand.Parameters.AddWithValue("@AmountDifference", amountDifference);
-                        stockUpdateCommand.Parameters.AddWithValue("@StockNumber", stockNumber);
-
-                        stockUpdateCommand.ExecuteNonQuery();
+                        MessageService.ShowWarningSnackbar("Görev bulunamadı.");
+                        return;
                     }
-                }
-                else if (originalTask == "Çıkış")
-                {
-                    string stockUpdateSql = "UPDATE stocks SET StockOut = StockOut + @AmountDifference, StockLast = StockLogin - (StockOut + @AmountDifference) WHERE StockNumber = @StockNumber";
-                    using (SQLiteCommand stockUpdateCommand = new SQLiteCommand(stockUpdateSql, connection))
+
+                    int newAmount = Convert.ToInt32(amount);
+                    int amountDifference = newAmount - originalAmount;
+
+                    // Stok güncellemesi için kontrol
+                    if (originalTask == "Çıkış" && amountDifference > StockLast)
                     {
-                        stockUpdateCommand.Parameters.AddWithValue("@AmountDifference", amountDifference);
-                        stockUpdateCommand.Parameters.AddWithValue("@StockNumber", stockNumber);
-
-                        stockUpdateCommand.ExecuteNonQuery();
+                        MessageService.ShowWarningSnackbar("Depoda bulunan miktardan fazla çıkış yapamazsınız.");
+                        return;
                     }
+
+                    // Task güncelle
+                    string updateSql = "UPDATE stockmovements SET TaskTime = @TaskTime, TaskDescription = @TaskDescription, Amount = @Amount WHERE TaskNo = @TaskNo";
+
+                    using (SQLiteCommand updateCommand = new SQLiteCommand(updateSql, connection))
+                    {
+                        updateCommand.Parameters.AddWithValue("@TaskTime", taskTime);
+                        updateCommand.Parameters.AddWithValue("@TaskDescription", taskDescription);
+                        updateCommand.Parameters.AddWithValue("@Amount", newAmount);
+                        updateCommand.Parameters.AddWithValue("@TaskNo", taskNo);
+
+                        updateCommand.ExecuteNonQuery();
+                    }
+
+                    // Stok güncelle
+                    if (originalTask == "Giriş" || originalTask == "Çıkış")
+                    {
+                        string stockUpdateSql = originalTask == "Giriş"
+                            ? "UPDATE stocks SET StockLogin = StockLogin + @AmountDifference, StockLast = (StockLogin + @AmountDifference) - StockOut WHERE StockNumber = @StockNumber"
+                            : "UPDATE stocks SET StockOut = StockOut + @AmountDifference, StockLast = StockLogin - (StockOut + @AmountDifference) WHERE StockNumber = @StockNumber";
+
+                        using (SQLiteCommand stockUpdateCommand = new SQLiteCommand(stockUpdateSql, connection))
+                        {
+                            stockUpdateCommand.Parameters.AddWithValue("@AmountDifference", amountDifference);
+                            stockUpdateCommand.Parameters.AddWithValue("@StockNumber", stockNumber);
+
+                            stockUpdateCommand.ExecuteNonQuery();
+                        }
+                    }
+
+                    MessageService.ShowSuccessSnackbar("İşlem başarıyla güncellendi.");
+                    FrameService.Navigate(typeof(StockMovementsPage));
                 }
-
-                MessageService.ShowSnackBar("İşlem başarıyla güncellendi.", "Başarılı", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Checkmark20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
-                FrameService.Navigate(typeof(StockMovementsPage));
-
-                connection.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageService.ShowErrorSnackbar("Veritabanı hatası: " + ex.Message);
             }
         }
 
+        ///
         public static void StockCardAdd(string StockNumber, string StockCategory, string StockName, string StockUnit)
         {
             using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
@@ -501,14 +481,14 @@ namespace StokTakip.Services
                         command.Parameters.AddWithValue("@StockName", StockName);
                         command.Parameters.AddWithValue("@StockUnit", StockUnit);
                         command.ExecuteNonQuery();
-                        MessageService.ShowSnackBar("Stok başarıyla kaydedildi.", "Başarılı", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Checkmark20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
+                        MessageService.ShowSuccessSnackbar("Stok başarıyla kaydedildi.");
                         FrameService.Navigate(typeof(StockCardTaskPage));
                     }
                     connection.Close();
                 }
                 catch (Exception ex)
                 {
-                    MessageService.ShowSnackBar("Bir hata oluştu: " + ex.Message, "Hata", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Checkmark20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
+                    MessageService.ShowErrorSnackbar("Veritabanı hatası: " + ex.Message);
                 }
             }
         }
@@ -526,17 +506,39 @@ namespace StokTakip.Services
                         int rowsAffected = command.ExecuteNonQuery();
                         if (rowsAffected > 0)
                         {
-                            MessageService.ShowSnackBar("Stok başarıyla silindi.", "Başarılı", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Checkmark20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
+                            DeleteRecordsByStockNumber(StockNumber);
+                            MessageService.ShowSuccessSnackbar("Stok başarıyla silindi.");
                         }
                         else
                         {
-                            MessageService.ShowSnackBar("Silinecek stok bulunamadı.", "Uyarı", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Warning20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
+                            MessageService.ShowWarningSnackbar("Silinecek stok bulunamadı.");
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageService.ShowSnackBar("Bir hata oluştu: " + ex.Message, "Hata", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.ErrorCircle20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
+                    MessageService.ShowErrorSnackbar("Veritabanı hatası: " + ex.Message);
+                }
+            }
+        }
+        public static void DeleteRecordsByStockNumber(string stockNumber)
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    string query = "DELETE FROM stockmovements WHERE StockNumber = @StockNumber";
+                    using (SQLiteCommand command = new SQLiteCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@StockNumber", stockNumber);
+                        int rowsAffected = command.ExecuteNonQuery();
+                    }
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageService.ShowErrorSnackbar("Veritabanı hatası: " + ex.Message);
                 }
             }
         }
@@ -559,17 +561,17 @@ namespace StokTakip.Services
 
                         if (rowsAffected == 0)
                         {
-                            MessageService.ShowSnackBar("Şifre güncellenemedi. Eski şifre yanlış olabilir", "Güncelleme Başarısız", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.ArrowClockwise20), Wpf.Ui.Controls.ControlAppearance.Dark, 2);
+                            MessageService.ShowWarningSnackbar("Şifre güncellenemedi. Eski şifre yanlış olabilir");
                         }
                         else
                         {
-                            MessageService.ShowSnackBar("Şifre başarıyla güncellendi", "Güncelleme Başarılı", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.ArrowClockwise20), Wpf.Ui.Controls.ControlAppearance.Dark, 2);
+                            MessageService.ShowSuccessSnackbar("Şifre başarıyla güncellendi");
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageService.ShowSnackBar("Bir hata oluştu: " + ex.Message, "Hata", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Checkmark20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
+                    MessageService.ShowErrorSnackbar("Veritabanı hatası: " + ex.Message);
                 }
             }
 
@@ -592,17 +594,17 @@ namespace StokTakip.Services
 
                         if (rowsAffected == 0)
                         {
-                            MessageService.ShowSnackBar("Şifre ayarlanamadı.", "İşlem Başarısız", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.DismissCircle20), Wpf.Ui.Controls.ControlAppearance.Dark, 2);
+                            MessageService.ShowWarningSnackbar("Şifre ayarlanamadı.");
                         }
                         else
                         {
-                            MessageService.ShowSnackBar("Şifre başarıyla ayarlandı", "İşlem Başarılı", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Checkmark20), Wpf.Ui.Controls.ControlAppearance.Dark, 2);
+                            MessageService.ShowSuccessSnackbar("Şifre başarıyla ayarlandı");
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageService.ShowSnackBar("Bir hata oluştu: " + ex.Message, "Hata", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Checkmark20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
+                    MessageService.ShowErrorSnackbar("Veritabanı hatası: " + ex.Message);
                 }
             }
 
@@ -626,17 +628,17 @@ namespace StokTakip.Services
 
                         if (rowsAffected == 0)
                         {
-                            MessageService.ShowSnackBar("Mail ayarlanamadı. Şifre yanlış olabilir", "İşlem Başarısız", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.ArrowClockwise20), Wpf.Ui.Controls.ControlAppearance.Dark, 2);
+                            MessageService.ShowWarningSnackbar("Mail ayarlanamadı. Şifre yanlış olabilir");
                         }
                         else
                         {
-                            MessageService.ShowSnackBar("Mail ayarlandı", "İşlem Başarılı", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.ArrowClockwise20), Wpf.Ui.Controls.ControlAppearance.Dark, 2);
+                            MessageService.ShowSuccessSnackbar("Mail ayarlandı");
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageService.ShowSnackBar("Bir hata oluştu: " + ex.Message, "Hata", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Checkmark20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
+                    MessageService.ShowErrorSnackbar("Veritabanı hatası: " + ex.Message);
                 }
             }
 
@@ -660,17 +662,17 @@ namespace StokTakip.Services
 
                         if (rowsAffected == 0)
                         {
-                            MessageService.ShowSnackBar("İsim Soyisim güncellenemedi. Şifre yanlış olabilir", "Güncelleme Başarısız", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.ArrowClockwise20), Wpf.Ui.Controls.ControlAppearance.Dark, 2);
+                            MessageService.ShowWarningSnackbar("İsim Soyisim güncellenemedi. Şifre yanlış olabilir");
                         }
                         else
                         {
-                            MessageService.ShowSnackBar("İsim Soyisim başarıyla güncellendi", "Güncelleme Başarılı", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.ArrowClockwise20), Wpf.Ui.Controls.ControlAppearance.Dark, 2);
+                            MessageService.ShowSuccessSnackbar("İsim Soyisim başarıyla güncellendi");
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageService.ShowSnackBar("Bir hata oluştu: " + ex.Message, "Hata", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Checkmark20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
+                    MessageService.ShowErrorSnackbar("Veritabanı hatası: " + ex.Message);
                 }
             }
 
@@ -693,17 +695,17 @@ namespace StokTakip.Services
 
                         if (rowsAffected == 0)
                         {
-                            MessageService.ShowSnackBar("Profil Resmi güncellenemedi. Şifre yanlış olabilir", "Güncelleme Başarısız", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.ArrowClockwise20), Wpf.Ui.Controls.ControlAppearance.Dark, 2);
+                            MessageService.ShowWarningSnackbar("Profil Resmi güncellenemedi. Şifre yanlış olabilir");
                         }
                         else
                         {
-                            MessageService.ShowSnackBar("Profil Resmi başarıyla güncellendi", "Güncelleme Başarılı", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.ArrowClockwise20), Wpf.Ui.Controls.ControlAppearance.Dark, 2);
+                            MessageService.ShowSuccessSnackbar("Profil Resmi başarıyla güncellendi");
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageService.ShowSnackBar("Bir hata oluştu: " + ex.Message, "Hata", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Checkmark20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
+                    MessageService.ShowErrorSnackbar("Veritabanı hatası: " + ex.Message);
                 }
             }
         }
@@ -741,12 +743,12 @@ namespace StokTakip.Services
                                 }
 
                                 transaction.Commit();
-                                MessageService.ShowSnackBar("Stok başarıyla güncellendi.", "Başarılı", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Checkmark20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
+                                MessageService.ShowSuccessSnackbar("Stok başarıyla güncellendi.");
                             }
                             else
                             {
                                 transaction.Rollback();
-                                MessageService.ShowSnackBar("Stok numarası bulunamadı.", "Uyarı", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Warning20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
+                                MessageService.ShowWarningSnackbar("Stok numarası bulunamadı.");
                             }
                         }
 
@@ -755,7 +757,7 @@ namespace StokTakip.Services
                 }
                 catch (Exception ex)
                 {
-                    MessageService.ShowSnackBar("Bir hata oluştu: " + ex.Message, "Hata", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Checkmark20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
+                    MessageService.ShowErrorSnackbar("Veritabanı hatası: " + ex.Message);
                 }
             }
         }
@@ -763,92 +765,110 @@ namespace StokTakip.Services
 
         public static string GetNextStockNumber()
         {
-            List<int> stockNumbers = new List<int>();
-
-            // SQLite bağlantısını oluştur
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            try
             {
-                // Bağlantıyı aç
-                connection.Open();
+                List<int> stockNumbers = new List<int>();
 
-                // Sorguyu tanımla
-                string query = "SELECT stocknumber FROM stocks";
-
-                // SQLite komutunu oluştur
-                using (SQLiteCommand command = new SQLiteCommand(query, connection))
+                // SQLite bağlantısını oluştur
+                using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
                 {
-                    // Sorguyu çalıştır ve verileri oku
-                    using (SQLiteDataReader reader = command.ExecuteReader())
+                    // Bağlantıyı aç
+                    connection.Open();
+
+                    // Sorguyu tanımla
+                    string query = "SELECT stocknumber FROM stocks";
+
+                    // SQLite komutunu oluştur
+                    using (SQLiteCommand command = new SQLiteCommand(query, connection))
                     {
-                        while (reader.Read())
+                        // Sorguyu çalıştır ve verileri oku
+                        using (SQLiteDataReader reader = command.ExecuteReader())
                         {
-                            stockNumbers.Add(Convert.ToInt32(reader["stocknumber"].ToString().Substring(2))); // ST'yi çıkar
+                            while (reader.Read())
+                            {
+                                stockNumbers.Add(Convert.ToInt32(reader["stocknumber"].ToString().Substring(2))); // ST'yi çıkar
+                            }
                         }
                     }
                 }
-            }
 
-            // Stock numaralarını sırala
-            stockNumbers.Sort();
+                // Stock numaralarını sırala
+                stockNumbers.Sort();
 
-            // Eksik olanları bul ve tamamla
-            int nextStockNumber = 1;
-            for (int i = 0; i < stockNumbers.Count; i++)
-            {
-                if (stockNumbers[i] != nextStockNumber)
+                // Eksik olanları bul ve tamamla
+                int nextStockNumber = 1;
+                for (int i = 0; i < stockNumbers.Count; i++)
                 {
-                    return nextStockNumber.ToString("D5"); // 5 haneli formatla
+                    if (stockNumbers[i] != nextStockNumber)
+                    {
+                        return nextStockNumber.ToString("D5"); // 5 haneli formatla
+                    }
+                    nextStockNumber++;
                 }
-                nextStockNumber++;
-            }
 
-            // Tüm mevcut stock numaraları tamamlanmışsa bir sonrakini döndür
-            return nextStockNumber.ToString("D5"); // 5 haneli formatla
+                // Tüm mevcut stock numaraları tamamlanmışsa bir sonrakini döndür
+                return nextStockNumber.ToString("D5"); // 5 haneli formatla
+            }
+            catch (Exception ex)
+            {
+                MessageService.ShowErrorSnackbar("Veritabanı hatası: " + ex.Message);
+                return string.Empty;
+            }
+            
         }
 
         public static string GetNextTaskNumber()
         {
-            List<int> taskNumbers = new List<int>();
-
-            // SQLite bağlantısını oluştur
-            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            try
             {
-                // Bağlantıyı aç
-                connection.Open();
+                List<int> taskNumbers = new List<int>();
 
-                // Sorguyu tanımla
-                string query = "SELECT TaskNo FROM stockmovements";
-
-                // SQLite komutunu oluştur
-                using (SQLiteCommand command = new SQLiteCommand(query, connection))
+                // SQLite bağlantısını oluştur
+                using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
                 {
-                    // Sorguyu çalıştır ve verileri oku
-                    using (SQLiteDataReader reader = command.ExecuteReader())
+                    // Bağlantıyı aç
+                    connection.Open();
+
+                    // Sorguyu tanımla
+                    string query = "SELECT TaskNo FROM stockmovements";
+
+                    // SQLite komutunu oluştur
+                    using (SQLiteCommand command = new SQLiteCommand(query, connection))
                     {
-                        while (reader.Read())
+                        // Sorguyu çalıştır ve verileri oku
+                        using (SQLiteDataReader reader = command.ExecuteReader())
                         {
-                            taskNumbers.Add(Convert.ToInt32(reader["TaskNo"].ToString().Substring(2))); // TN'yi çıkar
+                            while (reader.Read())
+                            {
+                                taskNumbers.Add(Convert.ToInt32(reader["TaskNo"].ToString().Substring(2))); // TN'yi çıkar
+                            }
                         }
                     }
                 }
-            }
 
-            // Stock numaralarını sırala
-            taskNumbers.Sort();
+                // Stock numaralarını sırala
+                taskNumbers.Sort();
 
-            // Eksik olanları bul ve tamamla
-            int nextTaskNumber = 1;
-            for (int i = 0; i < taskNumbers.Count; i++)
-            {
-                if (taskNumbers[i] != nextTaskNumber)
+                // Eksik olanları bul ve tamamla
+                int nextTaskNumber = 1;
+                for (int i = 0; i < taskNumbers.Count; i++)
                 {
-                    return nextTaskNumber.ToString("D5"); // 5 haneli formatla
+                    if (taskNumbers[i] != nextTaskNumber)
+                    {
+                        return nextTaskNumber.ToString("D5"); // 5 haneli formatla
+                    }
+                    nextTaskNumber++;
                 }
-                nextTaskNumber++;
-            }
 
-            // Tüm mevcut stock numaraları tamamlanmışsa bir sonrakini döndür
-            return nextTaskNumber.ToString("D5"); // 5 haneli formatla
+                // Tüm mevcut stock numaraları tamamlanmışsa bir sonrakini döndür
+                return nextTaskNumber.ToString("D5"); // 5 haneli formatla
+            }
+            catch (Exception ex)
+            {
+                MessageService.ShowErrorSnackbar("Veritabanı hatası: " + ex.Message);
+                return string.Empty;
+            }
+            
         }
 
     }

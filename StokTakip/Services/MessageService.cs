@@ -28,5 +28,19 @@ namespace StokTakip.Services
             snackbar.Timeout = TimeSpan.FromSeconds(_second);
             snackbar.Show();
         }
+        public static void ShowSuccessSnackbar(string message)
+        {
+            ShowSnackBar(message, "Başarılı", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Checkmark20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
+        }
+
+        public static void ShowWarningSnackbar(string message)
+        {
+            ShowSnackBar(message, "Uyarı", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Warning20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
+        }
+
+        public static void ShowErrorSnackbar(string message)
+        {
+            ShowSnackBar(message, "Hata", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.ErrorCircle20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
+        }
     }
 }

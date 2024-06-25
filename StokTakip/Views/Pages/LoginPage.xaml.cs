@@ -30,14 +30,20 @@ namespace StokTakip.Views.Pages
             string imageSource = DatabaseService.GetImageSource();
 
             // Check if the imageSource is "personImage" and use dynamic resource if true
-            if (imageSource == "personImage")
+            if (imageSource == string.Empty)
             {
                 imgPerson.Source = (ImageSource)FindResource("personImage");
             }
             else
             {
-                // Update the image source from the URI
-                imgPerson.Source = new BitmapImage(new Uri(imageSource, UriKind.Absolute));
+                if (System.IO.File.Exists(imageSource))
+                {
+                    imgPerson.Source = new BitmapImage(new Uri(imageSource, UriKind.Absolute));
+                }
+                else
+                {
+                    imgPerson.Source = (ImageSource)FindResource("personImage");
+                }
             }
         }
 

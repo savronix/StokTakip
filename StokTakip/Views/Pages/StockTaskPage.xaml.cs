@@ -89,7 +89,7 @@ namespace StokTakip.Views.Pages
             if ((string.IsNullOrWhiteSpace(txtTaskNumber.Text) ||
                 string.IsNullOrWhiteSpace(txtTime.Text) ||
                 string.IsNullOrWhiteSpace(txtAmount.Text) ||
-                cmbbxTask.SelectedItem == null) && (string.IsNullOrWhiteSpace(txtStockNumber.Text) ||
+                cmbbxTask.SelectedItem == null) || (string.IsNullOrWhiteSpace(txtStockNumber.Text) ||
                 string.IsNullOrWhiteSpace(txtStockCategory.Text) ||
                 string.IsNullOrWhiteSpace(txtStockName.Text) ||
                 cmbbxStockUnit.SelectedItem == null))
@@ -97,22 +97,26 @@ namespace StokTakip.Views.Pages
                 MessageService.ShowSnackBar("Lütfen tüm alanları doldurun.", "Eksik Bilgi", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Warning20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
                 return;
             }
-            if (((ComboBoxItem)cmbbxTask.SelectedItem).Content.ToString() == "Çıkış")
+            else
             {
-                if (int.Parse(txtAmount.Text)<=StockLast)
+                if (((ComboBoxItem)cmbbxTask.SelectedItem).Content.ToString() == "Çıkış")
                 {
-                    DatabaseService.TaskAdd(txtTaskNumber.Text, ((ComboBoxItem)cmbbxTask.SelectedItem).Content.ToString(), txtTime.Text, txtAmount.Text, txtDescription.Text, txtStockNumber.Text, txtStockCategory.Text, txtStockName.Text, ((ComboBoxItem)cmbbxStockUnit.SelectedItem).Content.ToString());
+                    if (int.Parse(txtAmount.Text) <= StockLast)
+                    {
+                        DatabaseService.TaskAdd(txtTaskNumber.Text, ((ComboBoxItem)cmbbxTask.SelectedItem).Content.ToString(), txtTime.Text, txtAmount.Text, txtDescription.Text, txtStockNumber.Text, txtStockCategory.Text, txtStockName.Text, ((ComboBoxItem)cmbbxStockUnit.SelectedItem).Content.ToString());
+                    }
+                    else
+                    {
+                        MessageService.ShowSnackBar("Depoda bulunan miktardan fazla çıkış yapamazsın!.", "Dikkat", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Warning20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
+
+                    }
                 }
                 else
                 {
-                    MessageService.ShowSnackBar("Depoda bulunan miktardan fazla çıkış yapamazsın!.", "Dikkat", new Wpf.Ui.Controls.SymbolIcon(Wpf.Ui.Controls.SymbolRegular.Warning20), Wpf.Ui.Controls.ControlAppearance.Dark, 1);
-
+                    DatabaseService.TaskAdd(txtTaskNumber.Text, ((ComboBoxItem)cmbbxTask.SelectedItem).Content.ToString(), txtTime.Text, txtAmount.Text, txtDescription.Text, txtStockNumber.Text, txtStockCategory.Text, txtStockName.Text, ((ComboBoxItem)cmbbxStockUnit.SelectedItem).Content.ToString());
                 }
             }
-            else
-            {
-                DatabaseService.TaskAdd(txtTaskNumber.Text, ((ComboBoxItem)cmbbxTask.SelectedItem).Content.ToString(), txtTime.Text, txtAmount.Text, txtDescription.Text, txtStockNumber.Text, txtStockCategory.Text, txtStockName.Text, ((ComboBoxItem)cmbbxStockUnit.SelectedItem).Content.ToString());
-            }
+           
         }
 
         private void cmbbxTask_SelectionChanged(object sender, SelectionChangedEventArgs e)
